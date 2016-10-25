@@ -1,0 +1,37 @@
+\begin{picture}(0,0)%
+\includegraphics{electron.pdf}%
+\end{picture}%
+\setlength{\unitlength}{3947sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(5096,7245)(2663,-7454)
+\put(7576,-3586){\makebox(0,0)[lb]{\smash{{\SetFigFont{20}{24.0}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$y$}%
+}}}}
+\put(4951,-511){\makebox(0,0)[lb]{\smash{{\SetFigFont{20}{24.0}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$z$}%
+}}}}
+\put(6001,-2236){\makebox(0,0)[lb]{\smash{{\SetFigFont{20}{24.0}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$\gamma_{v}$}%
+}}}}
+\put(4876,-6886){\makebox(0,0)[lb]{\smash{{\SetFigFont{20}{24.0}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$e$}%
+}}}}
+\put(3301,-1486){\makebox(0,0)[lb]{\smash{{\SetFigFont{20}{24.0}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$e'$}%
+}}}}
+\put(4351,-2536){\makebox(0,0)[lb]{\smash{{\SetFigFont{20}{24.0}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$\theta_{e'}$}%
+}}}}
+\put(5101,-2536){\makebox(0,0)[lb]{\smash{{\SetFigFont{20}{24.0}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$\theta_{\gamma_{v}}$}%
+}}}}
+\put(5776,-5236){\makebox(0,0)[lb]{\smash{{\SetFigFont{20}{24.0}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$\theta_{e'} \neq \theta_{\gamma_{v}}$}%
+}}}}
+\put(4951,-3886){\makebox(0,0)[lb]{\smash{{\SetFigFont{20}{24.0}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,1}$\varphi_{\gamma_{v}}$}%
+}}}}
+\put(5251,-3211){\makebox(0,0)[lb]{\smash{{\SetFigFont{20}{24.0}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,1}$\varphi_{e'}$}%
+}}}}
+\put(5776,-5686){\makebox(0,0)[lb]{\smash{{\SetFigFont{20}{24.0}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,1}$\varphi_{e'}-\varphi_{\gamma_{v}} = \pi$}%
+}}}}
+\put(2926,-5011){\makebox(0,0)[lb]{\smash{{\SetFigFont{20}{24.0}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$x$}%
+}}}}
+\end{picture}%
