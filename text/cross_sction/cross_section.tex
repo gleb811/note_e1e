@@ -267,7 +267,7 @@ way.
 \begin{figure}[htp]
 \begin{center}
 \includegraphics[width=12cm]{pictures/cross_sction/angles/alpha1.pdf}
-\caption{\small Definition of the angle $\alpha_{\pi^{-}}$ between two planes: the plane B is defined by the three-momenta of all final hadrons, while the plane A defined by  the three-momenta of $\pi^{-}$ and scattered proton. The definitions of  auxiliary vectors $\vec \beta$, $\vec \gamma$, $\vec \delta$ are given in the text.} \label{fig:cr_sec_kinematic2}
+\caption{\small Definition of the angle $\alpha_{\pi^{-}}$ between two planes: the plane B is defined by the three-momenta of all final hadrons, while the plane A defined by  the three-momenta of $\pi^{-}$ and initial proton. The definitions of  auxiliary vectors $\vec \beta$, $\vec \gamma$, $\vec \delta$ are given in the text.} \label{fig:cr_sec_kinematic2}
 \end{center}
 \end{figure}
 
@@ -276,7 +276,7 @@ way.
 \begin{figure}[htp]
 \begin{center}
 \includegraphics[width=12cm]{pictures/cross_sction/angles/alpha3.pdf}
-\caption{\small Definition of the angle $\alpha_{\pi^{+}}$ between two planes: the plane B is defined by the three-momenta of all final hadrons, while the plane A defined by  the three-momenta of $\pi^{+}$ and scattered proton. The definitions of  auxiliary vectors $\vec \beta$, $\vec \gamma$, $\vec \delta$ are given in the text.} \label{fig:cr_sec_kinematic3}
+\caption{\small Definition of the angle $\alpha_{\pi^{+}}$ between two planes: the plane B is defined by the three-momenta of all final hadrons, while the plane A defined by  the three-momenta of $\pi^{+}$ and initial proton. The definitions of  auxiliary vectors $\vec \beta$, $\vec \gamma$, $\vec \delta$ are given in the text.} \label{fig:cr_sec_kinematic3}
 \end{center}
 \end{figure}
 
@@ -346,10 +346,10 @@ d\alpha_{\pi^{-}}} = \frac{1}{F \cdot R}
 \end{equation}
 where $\Delta N_{full}$ and $\Delta N_{empty}$ are the numbers of events inside the
 seven-dimensional bin for runs with hydrogen and
-empty target, respectively, $F$ is total efficiency
+empty target, respectively. Each event is weighted with the corresponding photoelectron correction factor given by Eq.~\ref{eq:cc_corr_fact}. $F = F(\Delta W, \Delta Q^{2}, \Delta \tau)$ is total efficiency
  coming from the  Monte Carlo simulation,
-$R$ is the
-radiative correction factor,  $Q_{full}$ and $Q_{empty}$ are the integrated Faraday cup charges for runs with hydrogen and empty target, respectively, $q_{e}$ is the elementary charge ($q_{e} =1.610^{-19} $C), $\rho$ is the density of liquid hydrogen ($\rho = 0.0708 $ g/cm$^{3}$) at $T = 20$~K,
+$R = R(\Delta W, \Delta Q^{2})$ is the
+radiative correction factor,  $Q_{full}= 5999.64$~$\mu$C and $Q_{empty} = 334.603$~$\mu$C are the integrated Faraday cup charges for runs with hydrogen and empty target, respectively. These charges are calculated by summing up charges of all corresponding {\em blocks} that are used in the analysis. See the definition of {\em block} in Section~\ref{qcheck}. $q_{e}$ is the elementary charge ($q_{e} =1.610^{-19} $C), $\rho$ is the density of liquid hydrogen ($\rho = 0.0708 $ g/cm$^{3}$) at $T = 20$~K,
 $l$ is the length of the target ($l = 2$ cm), $M_{H}$ is the molar density of
 the natural mixture of hydrogen ($M_{H} = 1.00794$ g/mol),  $N_{A}$ is Avogadro's
 number ($N_{A} =6.0210^{23}$ mol$^{-1}$),  $\Delta
@@ -466,12 +466,16 @@ F = \frac{N_{rec}}{N_{gen}},
 \label{efficiency}
 \end{equation}
 where $N_{gen}$ and $N_{rec}$ are the numbers of Monte Carlo generated and reconstructed events, respectively.
-It turns out that the absolute statistical error in $F$ is given by
+
+Due to the fact that $N_{gen}$ and $N_{rec}$ are not independent the special approach needs to be applied in order to calculate the statistical error of efficiency. This approach is described in~\cite{Laforge:1996ts} and neglecting the events migration between the bins it gives the following expression for  
+ the absolute statistical error in $F$
 \begin{equation}
 \delta(F) =
-\frac{1}{N_{gen}}\sqrt{\frac{N_{rec}^{2}}{N_{gen}} + N_{rec}}.
+\sqrt{\frac{(N_{gen}-N_{rec})N_{rec}}{N_{gen}^{3}}}.
 \label{efferror}
 \end{equation}
+It needs to be mentioned that kinematical cells where $N_{rec} >= N_{gen}$ are treated as empty cells with no efficiency. Such cells are very rare and usually located near the edges of the invariant mass distributions where the cross section is close to zero.
+
 The absolute error on the cross section due to the limited Monte Carlo statistic is given by
 \begin{equation}
 \delta_{stat,MC} = \frac{d\sigma}{dM_{\pi^{+}\pi^{-}}dM_{\pi^{+}p}d\Omega_{\pi^{-}}.
