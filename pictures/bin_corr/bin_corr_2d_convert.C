@@ -8,7 +8,7 @@ TH1D *m_pip_p_bin_corr,*m_pip_pim_bin_corr,*m_pim_p_bin_corr;
 TH1D *theta_p_bin_corr,*theta_pim_bin_corr,*theta_pip_bin_corr;
 TH1D *alpha_p_bin_corr,*alpha_pim_bin_corr,*alpha_pip_bin_corr;
 
-TFile *file_out = new TFile("out_cr_sec_all_top_final_bin_corr_eff.root","RECREATE");
+TFile *file_out = new TFile("out_cr_sec_all_top_final_bin_corr.root","RECREATE");
 
 TH2D *q2vsw = new TH2D("q2vsw","q2vsw",22,1.3,1.85,12,0.4,1.);
 TH2D *q2vsw_q2_corr = new TH2D("q2vsw_q2_corr","q2vsw_q2_corr",22,1.3,1.85,12,0.4,1.);
@@ -24,7 +24,8 @@ Double_t err;
 Float_t Q2_bin,W_bin[30];
 
 TLegend *leg;
-
+TDirectory *q2dir[12];
+TDirectory *wdir[30];
 TSpline5 *spline;
 ostringstream qqq;
 
@@ -43,20 +44,23 @@ gErrorIgnoreLevel = kError;
 gStyle->SetStatY(0.88); 
 
 
-
+ostringstream qqq1;
 
 
 
 
 //Define input files
 
-TFile *file_cr_sec_pim = new TFile("out_cr_sec_all_top_bin_corr_eff.root","READ");
+TFile *file_cr_sec_pim = new TFile("out_cr_sec_all_top_bin_corr.root","READ");
 
 
  for (Int_t qq2=0; qq2<12;qq2++) {
  Q2_bin = 0.425 + 0.05*qq2;
-
-
+file_out->cd();
+qqq1.str("");
+qqq1 << "q2_" << Q2_bin;
+q2dir[qq2] = file_out->mkdir(qqq1.str().c_str());
+qqq1.str("");
 //for (Int_t i=13; i<14;i++) {
  for (Int_t i=get_min_w(Q2_bin); i<get_max_w(Q2_bin);i++) {
  W_bin[i] = 1.3125+0.025*i; 
@@ -85,8 +89,10 @@ q2vsw->SetBinError(i+1,qq2+1,err*(m_pip_pim->GetBinWidth(1)));
 };
  for (Int_t i=0; i<22;i++) {
  W_bin[i] = 1.3125+0.025*i; 
-
-h_q2 = q2vsw->ProjectionY("bin1",i+1,i+1);
+qqq.str("");
+qqq << "bin_" << W_bin[i];
+h_q2 = q2vsw->ProjectionY(qqq.str().c_str(),i+1,i+1);
+qqq.str("");
 h_q2->SetMarkerStyle(20);
 
 //h_q2->Draw(); 
@@ -304,12 +310,14 @@ theta_pip_bin_corr->Scale(factor);
 alpha_p_bin_corr->Scale(factor);
 alpha_pim_bin_corr->Scale(factor);
 alpha_pip_bin_corr->Scale(factor);
-file_out->cd();
 
+file_out->cd();
+q2dir[qq2]->cd();
 qqq.str("");
-qqq << "q2_" << Q2_bin << "/w_" << W_bin[i];
-file_out->mkdir(qqq.str().c_str());
-file_out->cd(qqq.str().c_str());
+qqq << "w_" << W_bin[i];
+wdir[i] = q2dir[qq2]->mkdir(qqq.str().c_str());
+wdir[i]->cd();
+
 qqq.str("");
 
 m_pip_p_bin_corr->Write();

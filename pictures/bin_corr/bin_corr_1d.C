@@ -4,7 +4,7 @@
 TH1D *m_pip_p,*m_pip_pim,*m_pim_p;
 TH1D *theta_p,*theta_pim,*theta_pip;
 TH1D *alpha_p,*alpha_pim,*alpha_pip;
-
+TH1D *alpha_p_sym,*alpha_pim_sym,*alpha_pip_sym;
 
 TH1D *m_pip_p_bin_corr,*m_pip_pim_bin_corr,*m_pim_p_bin_corr;
 TH1D *theta_p_bin_corr,*theta_pim_bin_corr,*theta_pip_bin_corr;
@@ -48,7 +48,7 @@ leg_w_int->SetFillStyle(0);
 
 //Define input files
 
-TFile *file_cr_sec_pim = new TFile("out_cr_sec_new.root","READ");
+TFile *file_cr_sec_pim = new TFile("../cross_sction/topologies/out_cr_sec_all_top.root","READ");
 
 
  for (Int_t qq2=2; qq2<3;qq2++) {
@@ -77,6 +77,30 @@ draw_1d_canvas(i,qq2);
 c->Print("bin_corr_1d.pdf");
 
 }; //end of main program
+
+
+Float_t alpha_asym(TH1D *h) {
+
+
+Float_t asym = 0.;
+
+for (Int_t bin=1; bin<=Int_t((h->GetNbinsX())/2.);bin++) {
+
+asym = asym + fabs(h->GetBinContent(bin) - h->GetBinContent((h->GetNbinsX()) - bin + 1));
+
+};
+
+asym = asym/(h->Integral());
+
+return asym*100;
+
+
+};
+
+
+
+
+
 
 TH1D *h_alpha_sym(TH1D *h) {
 
@@ -316,12 +340,12 @@ return h_out;
 
 }; 
 
-TH1D *h_bin_corr(TH1D *h) {
+TH1D *h_bin_corr(TH1D *h, TH1D *h_sym) {
 
 TH1D *h_out;
 
 
-TGraph *gr = new TGraphErrors(h);
+TGraph *gr = new TGraphErrors(h_sym);
 spline = new TSpline5("spline",gr);
 spline->SetLineWidth(2);
 
@@ -677,7 +701,9 @@ draw_1d_hist(6,theta_pip_bin_corr,"","h1prj_th_PIp_gen","d#sigma/d(-cos#theta) (
 //spline->Draw("same");
 //f->Draw("same");
 
-alpha_p = h_alpha_sym(alpha_p);
+alpha_p_sym = h_alpha_sym(alpha_p);
+
+
 
 max = (alpha_p->GetMaximum())/2.;
 
@@ -687,28 +713,32 @@ alpha_p->SetMaximum(max);
 
 draw_1d_hist(7,alpha_p,"","h1prj_alpha_PIpPIm_pipf_","d#sigma/d#alpha (#mubn/rad)","#alpha_{p'} (deg)",1,"e1P","alpha",i);
 
-alpha_p_bin_corr = h_bin_corr(alpha_p);
+alpha_p_bin_corr = h_bin_corr(alpha_p,alpha_p_sym);
+
+cout << alpha_asym(alpha_p_bin_corr) << "%" << endl;
 
 draw_1d_hist(7,alpha_p_bin_corr,"","h1prj_alpha_PIpPIm_pipf_gen","d#sigma/d#alpha (#mubn/rad)","#alpha_{p'} (deg)",2,"e1AP same","alpha",i);
 
 //spline->Draw("same");
 //f->Draw("same");
 
-alpha_pim = h_alpha_sym(alpha_pim);
+alpha_pim_sym = h_alpha_sym(alpha_pim);
 
 alpha_pim->SetMaximum(max);
 
 
 draw_1d_hist(8,alpha_pim,"","h2prj_alpha_PPIp_piPIm_","d#sigma/d#alpha (#mubn/rad)","#alpha_{#pi^{-}} (deg)",1,"e1P","alpha",i);
 
-alpha_pim_bin_corr = h_bin_corr(alpha_pim);
+alpha_pim_bin_corr = h_bin_corr(alpha_pim,alpha_pim_sym);
+
+cout << alpha_asym(alpha_pim_bin_corr) << "%" << endl;
 
 draw_1d_hist(8,alpha_pim_bin_corr,"","h2prj_alpha_PPIp_piPIm_gen","d#sigma/d#alpha (#mubn/rad)","#alpha_{#pi^{-}} (deg)",2,"e1AP same","alpha",i);
 
 //spline->Draw("same");
 //f->Draw("same");
 
-alpha_pip = h_alpha_sym(alpha_pip);
+alpha_pip_sym = h_alpha_sym(alpha_pip);
 
 alpha_pip->SetMaximum(max);
 
@@ -716,7 +746,9 @@ alpha_pip->SetMaximum(max);
 
 draw_1d_hist(9,alpha_pip,"","h3prj_alpha_PPIm_piPIp_","d#sigma/d#alpha (#mubn/rad)","#alpha_{#pi^{+}} (deg)",1,"e1P","alpha",i);
 
-alpha_pip_bin_corr = h_bin_corr(alpha_pip);
+alpha_pip_bin_corr = h_bin_corr(alpha_pip,alpha_pip_sym);
+
+cout << alpha_asym(alpha_pip_bin_corr) << "%" << endl;
 
 draw_1d_hist(9,alpha_pip_bin_corr,"","h3prj_alpha_PPIm_piPIp_gen","d#sigma/d#alpha (#mubn/rad)","#alpha_{#pi^{+}} (deg)",2,"e1AP same","alpha",i);
 

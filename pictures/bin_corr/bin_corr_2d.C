@@ -86,8 +86,10 @@ q2vsw->SetBinError(i+1,qq2+1,err*(m_pip_pim->GetBinWidth(1)));
 };
  for (Int_t i=0; i<22;i++) {
  W_bin[i] = 1.3125+0.025*i; 
-
-h_q2 = q2vsw->ProjectionY("bin1",i+1,i+1);
+qqq.str("");
+qqq << "bin_" << W_bin[i];
+h_q2 = q2vsw->ProjectionY(qqq.str().c_str(),i+1,i+1);
+qqq.str("");
 h_q2->SetMarkerStyle(20);
 
 c->cd();
@@ -243,7 +245,7 @@ TGraph *gr233 = new TGraph(nbins+1,x,y);
 
 spline = new TSpline5("spline",gr233);
 //TH1F *w_tmp = new TH1F("w_tmp","w_tmp",get_max_w(Q2_cur)-1,1.3,W_max+0.025);
-/*
+
 c->cd();
 c->SetTopMargin(0.01);
 c->SetRightMargin(0.01);
@@ -255,12 +257,12 @@ h_w->GetYaxis()->SetTitleOffset(0.6);
 h_w->GetYaxis()->SetTitleSize(0.07);
 h_w->GetYaxis()->SetTitle("#sigma (#mubn)");
 h_w->Draw("e1");
-*/
+
 
 
 //spline->Draw("same");
 
-//(h_corr_w(h_w,aa_max+1,aa_min))->Draw("same");
+(h_corr_w(h_w,aa_max+1,aa_min))->Draw("same");
 
 
 
@@ -293,10 +295,10 @@ w_fit->FixParameter(18,(h_w->GetBinContent(18)+h_w->GetBinContent(19))/2.);
 
 
 //h_w->Fit("pol3","","E",1.6375,1.8125);
-//spline->Draw("same");
+spline->Draw("same");
 
 //file_out->Close();
-//c->Print("w_spline.pdf");
+c->Print("w_spline.pdf");
 }; //end of main program
 
 

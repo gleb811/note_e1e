@@ -268,7 +268,7 @@ qqq.str("");
 
 qqq.str("");
 qqq << "q2_" << Q2_bin << "/w_" << W_bin[i] << "/model_alpha_pim_";
-gDirectory->GetObject(qqq.str().c_str(),alpha_pip_model);
+gDirectory->GetObject(qqq.str().c_str(),alpha_pim_model);
 qqq.str("");
 
 
@@ -285,7 +285,7 @@ qqq.str("");
 
 qqq.str("");
 qqq << "q2_" << Q2_bin << "/w_" << W_bin[i] << "/model_alpha_pip_";
-gDirectory->GetObject(qqq.str().c_str(),alpha_pim_model);
+gDirectory->GetObject(qqq.str().c_str(),alpha_pip_model);
 qqq.str("");
 
 };

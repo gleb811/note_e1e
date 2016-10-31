@@ -1,7 +1,7 @@
 TH1D *m_pip_p,*m_pip_pim,*m_pim_p;
 TH1D *theta_p,*theta_pim,*theta_pip;
 TH1D *alpha_p,*alpha_pim,*alpha_pip;
-
+TH1D *alpha_p_sym,*alpha_pim_sym,*alpha_pip_sym;
 
 TH1D *m_pip_p_bin_corr,*m_pip_pim_bin_corr,*m_pim_p_bin_corr;
 TH1D *theta_p_bin_corr,*theta_pim_bin_corr,*theta_pip_bin_corr;
@@ -12,7 +12,8 @@ TFile *file_out = new TFile("out_cr_sec_all_top_bin_corr_eff.root","RECREATE");
 Float_t Q2_bin,W_bin[30];
 
 TLegend *leg;
-
+TDirectory *q2dir[12];
+TDirectory *wdir[30];
 TSpline5 *spline;
 ostringstream qqq;
  
@@ -28,7 +29,7 @@ gStyle->SetErrorX(0);
 gErrorIgnoreLevel = kError;
 gStyle->SetStatY(0.88); 
 
-
+ostringstream qqq1;
 
 
 
@@ -42,12 +43,18 @@ TFile *file_cr_sec_pim = new TFile("out_cr_sec_eff.root","READ");
  for (Int_t qq2=0; qq2<12;qq2++) {
  Q2_bin = 0.425 + 0.05*qq2;
 
+file_out->cd();
+qqq1.str("");
+qqq1 << "q2_" << Q2_bin;
+q2dir[qq2] = file_out->mkdir(qqq1.str().c_str());
+qqq1.str("");
 
 //for (Int_t i=13; i<14;i++) {
  for (Int_t i=get_min_w(Q2_bin); i<get_max_w(Q2_bin);i++) {
  W_bin[i] = 1.3125+0.025*i; 
 
 read_data_rec(file_cr_sec_pim,i);
+
 
 draw_1d_canvas(i,qq2);
 
@@ -256,9 +263,6 @@ return h_out;
 }; 
 
 
-
-
-
 TH1D *h_alpha_sym(TH1D *h) {
 
 TH1D *h_out;
@@ -313,12 +317,13 @@ return h_out;
 
 
 
-TH1D *h_bin_corr(TH1D *h) {
+
+TH1D *h_bin_corr(TH1D *h, TH1D *h_sym) {
 
 TH1D *h_out;
 
 
-TGraph *gr = new TGraph(h);
+TGraph *gr = new TGraph(h_sym);
 spline = new TSpline5("spline",gr);
 spline->SetLineWidth(2);
 
@@ -555,23 +560,49 @@ theta_pip_bin_corr = h_bin_corr_theta(theta_pip);
 
 
 
-alpha_p = h_alpha_sym(alpha_p);
+alpha_p_sym = h_alpha_sym(alpha_p);
 
-alpha_p_bin_corr = h_bin_corr(alpha_p);
+alpha_p_bin_corr = h_bin_corr(alpha_p,alpha_p_sym);
 
-alpha_pim = h_alpha_sym(alpha_pim);
+Float_t asym_avrg = 0.;
 
-alpha_pim_bin_corr = h_bin_corr(alpha_pim);
+//if (alpha_asym(alpha_p_bin_corr) > 9.) {
+//cout << alpha_asym(alpha_p_bin_corr) << "% W = " << W_bin[i] << endl;
+//};
+asym_avrg = alpha_asym(alpha_p_bin_corr);
 
-alpha_pip = h_alpha_sym(alpha_pip);
+alpha_pim_sym = h_alpha_sym(alpha_pim);
 
-alpha_pip_bin_corr = h_bin_corr(alpha_pip);
+alpha_pim_bin_corr = h_bin_corr(alpha_pim,alpha_pim_sym);
+
+//if (alpha_asym(alpha_pim_bin_corr) > 9.) {
+//cout << alpha_asym(alpha_pim_bin_corr) << "% W = " << W_bin[i] << endl;
+//};
+
+asym_avrg = asym_avrg + alpha_asym(alpha_pim_bin_corr);
+
+alpha_pip_sym = h_alpha_sym(alpha_pip);
+
+alpha_pip_bin_corr = h_bin_corr(alpha_pip,alpha_pip_sym);
+
+//if (alpha_asym(alpha_pip_bin_corr) > 9.) {
+//cout << alpha_asym(alpha_pip_bin_corr) << "% W = " << W_bin[i]  << endl;
+//};
+
+asym_avrg = asym_avrg + alpha_asym(alpha_pip_bin_corr);
+asym_avrg = asym_avrg/3.;
+ 
+if (asym_avrg > 5.)cout << asym_avrg << "% W = " << W_bin[i]  << endl; 
+
+file_out->cd();
+q2dir[qq2]->cd();
+qqq.str("");
+qqq << "w_" << W_bin[i];
+wdir[i] = q2dir[qq2]->mkdir(qqq.str().c_str());
+wdir[i]->cd();
 
 qqq.str("");
-qqq << "q2_" << Q2_bin << "/w_" << W_bin[i];
-file_out->mkdir(qqq.str().c_str());
-file_out->cd(qqq.str().c_str());
-qqq.str("");
+
 
 m_pip_p_bin_corr->Write();
 m_pip_pim_bin_corr->Write();
@@ -583,7 +614,30 @@ alpha_p_bin_corr->Write();
 alpha_pim_bin_corr->Write();
 alpha_pip_bin_corr->Write();
 
-file_out->cd();
+//file_out->cd();
 
 
 };
+
+
+Float_t alpha_asym(TH1D *h) {
+
+
+Float_t asym = 0.;
+
+for (Int_t bin=1; bin<=Int_t((h->GetNbinsX())/2.);bin++) {
+
+asym = asym + fabs(h->GetBinContent(bin) - h->GetBinContent((h->GetNbinsX()) - bin + 1));
+
+//cout << h->GetBinContent(bin) << " " << h->GetBinContent((h->GetNbinsX()) - bin + 1) << endl;
+//cout << asym << endl;
+
+};
+
+asym = asym/(h->Integral());
+
+return asym*100;
+
+
+};
+

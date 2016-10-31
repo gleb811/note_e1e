@@ -288,7 +288,7 @@ c2->SetRightMargin(0.05);
 c2->SetBottomMargin(0.17);
 c2->SetLeftMargin(0.17); 
  qqq.str("");
- qqq << "Q^{2} = " << Q2_bin << " GeV^{2}";
+ qqq << "Q^{2} = 0.425" << " GeV^{2}";
  leg_w_int->AddEntry(h_w[0],qqq.str().c_str(),"p");
  qqq.str("");
  
@@ -323,8 +323,8 @@ h_w[qq2]->Draw("e1P same");
  };
 leg_w_int->Draw();
 //file_out->Close();
-
 */
+
 }; //end of main program
 
 
