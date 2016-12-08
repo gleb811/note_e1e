@@ -404,6 +404,19 @@ where $N_{bins}$ is the number of bins.
 Then the invariant mass distributions are obtained with the number of bins $N_{bins}$ and the left boundary of the first bin is set to $M_{left}$. That makes the last bin to be situated completely out of the boundaries given by Eq.~\ref{eq:inv_mass_boundary}. Although the cross section obtained in this bin is very small, it is kept in analysis since its content contributes to all other cross sections obtained by integration over the corresponding invariant mass. 
 After the binning corrections this effect is assumed to be taken into account and this last bin in invariant masses is neglected. 
 
+It needs to be mentioned that the next to last bin in each invariant mass also needs special attention. Since the cross sections are obtained in $W$ bin, the right boundaries of the invariant mass distributions vary for different events within this bin. In Fig.~\ref{fig:mass_corr} the distribution of the invariant mass of the two final hadrons $X_{1}$ and $X_{2}$ is schematically illustrated for the bin in $W$ from $W_{left}$ to $W_{right}$. 
+The green and red vertical dashed lines show  maximal invariant mass values that can be reached with $W_{left}$ and $W_{right}$, respectively, while the vertical black dashed lines show the boundaries of the next to last bin in the invariant mass.
+As it is seen in Fig.~\ref{fig:mass_corr} events in this bin with $W$ between $W_{left}$ and $M_{right}^{N_{bins}-1} = W_{center} - m_{X_{3}}$ are distributed in the range in $M_{X_{1}X_{2}}$, which is less than invariant mass bin width defined by Eq.~\ref{eq:bin_width}.
+
+Correction for this effect is made using the new double pion event generator~\cite{Skorodum:EG}. For that purpose for each invariant mass two  one-dimensional distributions are generated in each $W$ bin. The first one mimics the data distribution, for which all events in the next to last bin are divided by the same bin width defined by Eq.~\ref{eq:bin_width}.  For the second one events with $W$ between $W_{center}$ and $W_{right}$ are divided by the same bin width defined by Eq.~\ref{eq:bin_width}, while events with $W$ between $W_{left}$ and $W_{center}$ are divided by the bin width that is individual for each event and equal to $W - m_{X_{3}} - M_{left}^{N_{bins}-1}$. The correction factor, by which obtained single-differential cross sections in the next to last bin should be multiplied, is defined as the ratio of the second distribution over the first one. This factor typically varies from 5\% to 10\%. 
+
+
+\begin{figure}[htp]
+\begin{center}
+\frame{\includegraphics[width=12cm]{pictures/cross_sction/mass_corr/mass_tex.pdf}}
+\caption{\small Schematic representation of the cross sections in the next to last bin in the invariant mass $(M_{X_{1}X_{2}})$ for various $W$. Green and red vertical dashed lines show  maximal invariant mass values that can be reached with $W_{left}$ and $W_{right}$, respectively, while vertical black dashed lines show the boundaries of the next to last bin in the invariant mass.  \label{fig:mass_corr}}
+\end{center}
+\end{figure}
 
 
 

@@ -37,7 +37,7 @@ ostringstream qqq1;
 
 //Define input files
 
-TFile *file_cr_sec_pim = new TFile("out_cr_sec_eff.root","READ");
+TFile *file_cr_sec_pim = new TFile("out_cr_sec_all_top_mass_corr_eff.root","READ");
 
 
  for (Int_t qq2=0; qq2<12;qq2++) {

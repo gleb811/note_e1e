@@ -8,7 +8,7 @@ TH1D *m_pip_p_bin_corr,*m_pip_pim_bin_corr,*m_pim_p_bin_corr;
 TH1D *theta_p_bin_corr,*theta_pim_bin_corr,*theta_pip_bin_corr;
 TH1D *alpha_p_bin_corr,*alpha_pim_bin_corr,*alpha_pip_bin_corr;
 
-TFile *file_out = new TFile("out_cr_sec_all_top_final_bin_corr.root","RECREATE");
+TFile *file_out = new TFile("out_cr_sec_all_top_final_bin_corr_eff.root","RECREATE");
 
 TH2D *q2vsw = new TH2D("q2vsw","q2vsw",22,1.3,1.85,12,0.4,1.);
 TH2D *q2vsw_q2_corr = new TH2D("q2vsw_q2_corr","q2vsw_q2_corr",22,1.3,1.85,12,0.4,1.);
@@ -51,7 +51,7 @@ ostringstream qqq1;
 
 //Define input files
 
-TFile *file_cr_sec_pim = new TFile("out_cr_sec_all_top_bin_corr.root","READ");
+TFile *file_cr_sec_pim = new TFile("out_cr_sec_all_top_bin_corr_eff.root","READ");
 
 
  for (Int_t qq2=0; qq2<12;qq2++) {

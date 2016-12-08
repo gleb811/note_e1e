@@ -275,7 +275,7 @@ h_w_err[qq2]->Draw("same ][");
 
 };
 
-/*
+
 leg_w_int = new TLegend(0.17,0.75,0.95,0.95); 
 leg_w_int->SetNColumns(3);
 leg_w_int->SetFillStyle(0);
@@ -323,7 +323,7 @@ h_w[qq2]->Draw("e1P same");
  };
 leg_w_int->Draw();
 //file_out->Close();
-*/
+
 
 }; //end of main program
 

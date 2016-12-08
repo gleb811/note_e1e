@@ -84,7 +84,7 @@ q2vsw->SetBinError(i+1,qq2+1,err*(m_pip_pim->GetBinWidth(1)));
 
 };
 };
- for (Int_t i=0; i<22;i++) {
+ for (Int_t i=6; i<7;i++) {
  W_bin[i] = 1.3125+0.025*i; 
 qqq.str("");
 qqq << "bin_" << W_bin[i];
@@ -103,13 +103,13 @@ h_q2->GetYaxis()->SetTitleOffset(0.6);
 h_q2->GetYaxis()->SetTitleSize(0.07);
 h_q2->GetYaxis()->SetTitle("#sigma (#mubn)");
 
-/*
+
 h_q2->SetMinimum(0.00001);
 h_q2->Draw("e1"); 
 h_q2->Fit("f_q2","E");
 (h_bin_corr(h_q2))->Draw("APe1 same");
 c->Print("q2_fit.pdf");
-*/
+
  for (Int_t qq2=0; qq2<12;qq2++) {
  Q2_bin = 0.425 + 0.05*qq2;
 
@@ -284,7 +284,7 @@ w_fit->SetParLimits(6,-500.,500.);
 w_fit->SetParLimits(7,-500.,500.);
 w_fit->SetParLimits(8,-500.,500.);
 */
-
+/*
 w_fit->FixParameter(15,(h_w->GetBinContent(6)+h_w->GetBinContent(7))/2.);
 w_fit->FixParameter(16,(h_w->GetBinContent(10)+h_w->GetBinContent(11))/2.);
 w_fit->FixParameter(17,(h_w->GetBinContent(14)+h_w->GetBinContent(15))/2.);
@@ -299,6 +299,7 @@ spline->Draw("same");
 
 //file_out->Close();
 c->Print("w_spline.pdf");
+*/
 }; //end of main program
 
 

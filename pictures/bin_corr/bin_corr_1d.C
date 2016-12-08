@@ -48,7 +48,7 @@ leg_w_int->SetFillStyle(0);
 
 //Define input files
 
-TFile *file_cr_sec_pim = new TFile("../cross_sction/topologies/out_cr_sec_all_top.root","READ");
+TFile *file_cr_sec_pim = new TFile("out_cr_sec_all_top_mass_corr.root","READ");
 
 
  for (Int_t qq2=2; qq2<3;qq2++) {
@@ -598,7 +598,7 @@ qqq << "Q^{2} = " << Q2_bin << " GeV^{2}" <<", W = " << W_bin[i] <<" GeV" ;
 
 Float_t max; 
 
-max = (m_pip_p->GetMaximum())/2.;
+max = (m_pip_p->GetMaximum());
 m_pip_p->SetMaximum(max);
 
 
