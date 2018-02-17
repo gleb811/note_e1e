@@ -1,3 +1,75 @@
+TH1D*  Smooth_fun(TH1D *h, Double_t bin_num) {
+Int_t i,j,a;
+a = h->GetNbinsX();
+
+
+
+TH1D* h1 = new TH1D("qqq","qqq",a,h->GetBinLowEdge(1),h->GetBinLowEdge(a)+	h->GetBinWidth(a));
+Double_t y,width;
+width=h->GetBinWidth(a);
+
+
+for (i=1; i<=a-bin_num; i++)
+{
+y=0;
+for (j=0; j<=bin_num-1; j++)
+{
+y=y+h->GetBinContent(i+j)/bin_num;
+
+};
+h1->Fill(h->GetBinLowEdge(1)+(i-1)*width+width*bin_num/2.,y);
+ 
+};
+return h1;
+}; 
+
+Double_t GetTDCleftcut(TH1D *h, Double_t par) {
+   Int_t i,j,a,ib;
+   a = h->GetNbinsX();
+   Double_t b,bmax,ymax;
+   ymax = h->GetMaximumBin();
+   ymax = h->GetBinContent(ymax);
+   TH1D *hmin = new TH1D("min","min",h->GetMaximumBin(),h->GetBinLowEdge(0),h->GetBinLowEdge(h->GetMaximumBin()));
+
+   for (i=0; i<=h->GetMaximumBin(); i++)
+{
+hmin->Fill(h->GetBinCenter(i), Double_t(fabs(h->GetBinContent(i)-ymax/par)));
+
+}
+
+    b=hmin->GetBinCenter(hmin->GetMinimumBin());
+//    bmax=h->GetBinCenter(h->GetMaximumBin());
+    hmin->Delete();
+//    hmin->Draw();
+//    pause();
+    return b;
+ };    
+
+
+Double_t GetTDCrightcut(TH1D *h) {
+   Int_t i,j,a,ib;
+   a = h->GetNbinsX();
+   Double_t b,bmax,ymax;
+   ymax = h->GetMaximumBin();
+   ymax = h->GetBinContent(ymax);
+   TH1D *hmin = new TH1D("min","min",a-h->GetMaximumBin(),h->GetBinLowEdge(h->GetMaximumBin()),h->GetBinLowEdge(a));
+
+   for (i=h->GetMaximumBin(); i<=a; i++)
+{
+hmin->Fill(h->GetBinCenter(i),Double_t(fabs(h->GetBinContent(i)-ymax/2.)));
+
+}
+
+    b=hmin->GetBinCenter(hmin->GetMinimumBin());
+//    bmax=h->GetBinCenter(h->GetMaximumBin());
+    hmin->Delete();
+//    hmin->Draw();
+//    pause();
+    return b;
+ };   
+
+
+
 void fid_new() {
 gStyle->SetCanvasBorderSize(50);
 gStyle->SetCanvasBorderMode(2);
@@ -130,72 +202,3 @@ qqq7.str("");
 };
 }
 
-TH1D*  Smooth_fun(TH1D *h, Double_t bin_num) {
-Int_t i,j,a;
-a = h->GetNbinsX();
-
-
-
-TH1D* h1 = new TH1D("qqq","qqq",a,h->GetBinLowEdge(1),h->GetBinLowEdge(a)+	h->GetBinWidth(a));
-Double_t y,width;
-width=h->GetBinWidth(a);
-
-
-for (i=1; i<=a-bin_num; i++)
-{
-y=0;
-for (j=0; j<=bin_num-1; j++)
-{
-y=y+h->GetBinContent(i+j)/bin_num;
-
-};
-h1->Fill(h->GetBinLowEdge(1)+(i-1)*width+width*bin_num/2.,y);
- 
-};
-return h1;
-}; 
-
-Double_t GetTDCleftcut(TH1D *h, Double_t par) {
-   Int_t i,j,a,ib;
-   a = h->GetNbinsX();
-   Double_t b,bmax,ymax;
-   ymax = h->GetMaximumBin();
-   ymax = h->GetBinContent(ymax);
-   TH1D *hmin = new TH1D("min","min",h->GetMaximumBin(),h->GetBinLowEdge(0),h->GetBinLowEdge(h->GetMaximumBin()));
-
-   for (i=0; i<=h->GetMaximumBin(); i++)
-{
-hmin->Fill(h->GetBinCenter(i), Double_t(fabs(h->GetBinContent(i)-ymax/par)));
-
-}
-
-    b=hmin->GetBinCenter(hmin->GetMinimumBin());
-//    bmax=h->GetBinCenter(h->GetMaximumBin());
-    hmin->Delete();
-//    hmin->Draw();
-//    pause();
-    return b;
- };    
-
-
-Double_t GetTDCrightcut(TH1D *h) {
-   Int_t i,j,a,ib;
-   a = h->GetNbinsX();
-   Double_t b,bmax,ymax;
-   ymax = h->GetMaximumBin();
-   ymax = h->GetBinContent(ymax);
-   TH1D *hmin = new TH1D("min","min",a-h->GetMaximumBin(),h->GetBinLowEdge(h->GetMaximumBin()),h->GetBinLowEdge(a));
-
-   for (i=h->GetMaximumBin(); i<=a; i++)
-{
-hmin->Fill(h->GetBinCenter(i),Double_t(fabs(h->GetBinContent(i)-ymax/2.)));
-
-}
-
-    b=hmin->GetBinCenter(hmin->GetMinimumBin());
-//    bmax=h->GetBinCenter(h->GetMaximumBin());
-    hmin->Delete();
-//    hmin->Draw();
-//    pause();
-    return b;
- };   

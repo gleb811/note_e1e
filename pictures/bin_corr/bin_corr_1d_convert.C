@@ -7,7 +7,7 @@ TH1D *m_pip_p_bin_corr,*m_pip_pim_bin_corr,*m_pim_p_bin_corr;
 TH1D *theta_p_bin_corr,*theta_pim_bin_corr,*theta_pip_bin_corr;
 TH1D *alpha_p_bin_corr,*alpha_pim_bin_corr,*alpha_pip_bin_corr;
 
-TFile *file_out = new TFile("out_cr_sec_all_top_bin_corr_eff.root","RECREATE");
+TFile *file_out = new TFile("out_cr_sec_all_top_bin_corr.root","RECREATE");
 
 Float_t Q2_bin,W_bin[30];
 
@@ -17,63 +17,33 @@ TDirectory *wdir[30];
 TSpline5 *spline;
 ostringstream qqq;
  
-void bin_corr_1d_convert() {
-#include <TH2.h>
-#include <TH1.h>
-#include <TH3.h>
-#include <THnSparse.h>
-gStyle->SetTitleSize(0.07,"t");
-gStyle->SetTitleY(1.01);
-gStyle->SetOptStat(0);
-gStyle->SetErrorX(0);
-gErrorIgnoreLevel = kError;
-gStyle->SetStatY(0.88); 
+Double_t f_fit(Double_t *x, Double_t *par) {
 
-ostringstream qqq1;
+return spline->Eval(x[0]);
+
+}
 
 
+Float_t alpha_asym(TH1D *h) {
 
 
+Float_t asym = 0.;
 
-//Define input files
+for (Int_t bin=1; bin<=Int_t((h->GetNbinsX())/2.);bin++) {
 
-TFile *file_cr_sec_pim = new TFile("out_cr_sec_all_top_mass_corr_eff.root","READ");
+asym = asym + fabs(h->GetBinContent(bin) - h->GetBinContent((h->GetNbinsX()) - bin + 1));
 
+//cout << h->GetBinContent(bin) << " " << h->GetBinContent((h->GetNbinsX()) - bin + 1) << endl;
+//cout << asym << endl;
 
- for (Int_t qq2=0; qq2<12;qq2++) {
- Q2_bin = 0.425 + 0.05*qq2;
+};
 
-file_out->cd();
-qqq1.str("");
-qqq1 << "q2_" << Q2_bin;
-q2dir[qq2] = file_out->mkdir(qqq1.str().c_str());
-qqq1.str("");
+asym = asym/(h->Integral());
 
-//for (Int_t i=13; i<14;i++) {
- for (Int_t i=get_min_w(Q2_bin); i<get_max_w(Q2_bin);i++) {
- W_bin[i] = 1.3125+0.025*i; 
-
-read_data_rec(file_cr_sec_pim,i);
-
-
-draw_1d_canvas(i,qq2);
-
-
-
-
-
-
-
+return asym*100;
 
 
 };
-};
-
-
-
-file_out->Close();
-
-}; //end of main program
 
 
 TH1D *h_bin_corr_mass(TH1D *h) {
@@ -383,42 +353,7 @@ return h_out;
 }; 
 
 
-void draw_1d_hist (Int_t canvas, TH1D *h, string title, string name, string ytitle, string xtitle, Int_t color, string draw_options, string distr_flag,Int_t i) {
 
-c->cd(canvas);
-c->cd(canvas)->SetBottomMargin(0.2);
-c->cd(canvas)->SetTopMargin(0.1);
-c->cd(canvas)->SetLeftMargin(0.23);
-c->cd(canvas)->SetRightMargin(0.01);
-gPad->SetFillStyle(0);
-
-h->SetMarkerStyle(20);
-h->SetMarkerColor(color);
-h->SetLineColor(color);
-h->SetOption("pX0");
-h->SetTitle(title.c_str());
-h->SetTitleSize(0.1);
-
-
-h->SetName(name.c_str());
-
-
- h->GetYaxis()->SetTitle(ytitle.c_str());
- h ->GetXaxis()->SetTitle(xtitle.c_str());
- h ->GetXaxis()->SetTitleSize(0.08);
- h->GetYaxis()->SetTitleSize(0.08);
- h->GetYaxis()->SetTitleOffset(1.3);
- h->GetXaxis()->SetLabelSize(0.08);
- h->GetXaxis()->SetNdivisions(6);
- h->GetYaxis()->SetLabelSize(0.07);
- h->GetYaxis()->SetNdivisions(5);
-
-
-h->SetAxisRange(0, h-> GetMaximum()+(h-> GetMaximum())/2., "Y");
-if ((name == "model_thetaP_")&&(W_bin[i]>1.65))h->SetAxisRange(0, h-> GetMaximum()+(h-> GetMaximum()), "Y");
-
-
-};
 
 
 
@@ -530,11 +465,7 @@ qqq.str("");
 };
 
 
-Double_t f_fit(Double_t *x, Double_t *par) {
 
-return spline->Eval(x[0]);
-
-}
 
 void draw_1d_canvas( Int_t i, Int_t qq2 ) {
 
@@ -620,24 +551,63 @@ alpha_pip_bin_corr->Write();
 };
 
 
-Float_t alpha_asym(TH1D *h) {
 
 
-Float_t asym = 0.;
 
-for (Int_t bin=1; bin<=Int_t((h->GetNbinsX())/2.);bin++) {
+void bin_corr_1d_convert() {
+#include <TH2.h>
+#include <TH1.h>
+#include <TH3.h>
+#include <THnSparse.h>
+gStyle->SetTitleSize(0.07,"t");
+gStyle->SetTitleY(1.01);
+gStyle->SetOptStat(0);
+gStyle->SetErrorX(0);
+gErrorIgnoreLevel = kError;
+gStyle->SetStatY(0.88); 
 
-asym = asym + fabs(h->GetBinContent(bin) - h->GetBinContent((h->GetNbinsX()) - bin + 1));
+ostringstream qqq1;
 
-//cout << h->GetBinContent(bin) << " " << h->GetBinContent((h->GetNbinsX()) - bin + 1) << endl;
-//cout << asym << endl;
+
+
+
+
+//Define input files
+
+TFile *file_cr_sec_pim = new TFile("out_cr_sec_all_top_mass_corr.root","READ");
+
+
+ for (Int_t qq2=0; qq2<12;qq2++) {
+ Q2_bin = 0.425 + 0.05*qq2;
+
+file_out->cd();
+qqq1.str("");
+qqq1 << "q2_" << Q2_bin;
+q2dir[qq2] = file_out->mkdir(qqq1.str().c_str());
+qqq1.str("");
+
+//for (Int_t i=13; i<14;i++) {
+ for (Int_t i=get_min_w(Q2_bin); i<get_max_w(Q2_bin);i++) {
+ W_bin[i] = 1.3125+0.025*i; 
+
+read_data_rec(file_cr_sec_pim,i);
+
+
+draw_1d_canvas(i,qq2);
+
+
+
+
+
+
+
+
 
 };
-
-asym = asym/(h->Integral());
-
-return asym*100;
-
-
 };
 
+
+
+file_out->Close();
+
+}; //end of main program

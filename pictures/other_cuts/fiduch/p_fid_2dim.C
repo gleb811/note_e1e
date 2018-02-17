@@ -1,3 +1,19 @@
+double ap(double *x, double *par) {
+   double s;
+   s =  24.*(1-exp(-1.*0.08*(x[0]-9.)));
+       return s;
+};
+
+double bp(double *x, double *par) {
+   double w; 
+   w = -1.*25.*(1-exp(-1.*0.1*(x[0]-10.)));
+          return w;
+};
+
+
+
+
+
 void p_fid_2dim () {
 
 gStyle ->SetOptLogz(1);
@@ -95,14 +111,3 @@ qqq7.str("");
 };
 };
 
-double ap(double *x, double *par) {
-   double s;
-   s =  24.*(1-exp(-1.*0.08*(x[0]-9.)));
-       return s;
-};
-
-double bp(double *x, double *par) {
-   double w; 
-   w = -1.*25.*(1-exp(-1.*0.1*(x[0]-10.)));
-          return w;
-};

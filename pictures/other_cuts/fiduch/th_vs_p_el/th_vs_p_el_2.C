@@ -1,88 +1,5 @@
-void th_vs_p_el_2(){
-gStyle ->SetPalette(1);
-gStyle ->SetOptLogz(1);
-gStyle->SetOptStat(0);
-gStyle ->SetOptFit(0011);
-gStyle ->SetStatW(0.1);
-gStyle ->SetStatH(0.05);
-gStyle ->SetStatY(0.99);
-gStyle ->SetStatX(0.9);
-gStyle ->SetStatFontSize(0.1);
-gStyle->SetTitleY(1);
-gStyle->SetTitleX(0.56);
-gStyle->SetTitleSize(0.1,"t");
-Short_t j,k;
-ostringstream qqq;
-ostringstream qqq1;
-ostringstream qqq2;
-
-TFile *MyFile = new TFile("../test_proton_fiduch.root","READ");
-
-Double_t M_MEAN [45];
-Double_t M_MEAN_2 [60];
-TCanvas *c = new TCanvas("c","c",0,0,500,500);
-//c -> Divide (2,3);
-//TCanvas *c3= new TCanvas ("c3","c3",0,0,1000,1000);
-//c3->Divide(5,9);
-//TCanvas *c4= new TCanvas ("c4","c4",0,0,1000,1000);
-//c4->Divide(6,12);
-TH1D *h_odn[45];
-Double_t P[45];
-TH1D *h_odn_2[60];
-Double_t P_2[60];
-TH2 *h;
-TH1 *h1;
-TH1 *h2;
-c->cd();
-MyFile->GetObject("th_vs_p/th_vs_p_e_2_2",h);
-c->cd()->SetRightMargin(0.12);
-c->cd()->SetBottomMargin(0.1);
-c->cd()->SetLeftMargin(0.1);
-h->GetXaxis()->SetLabelSize(0.04);
-h->GetXaxis()->SetNdivisions(5);
-h->GetYaxis()->SetLabelSize(0.04);
-h->GetYaxis()->SetNdivisions(4);
-h->GetXaxis()->SetTitle("P (GeV)");
-h->GetYaxis()->SetTitle("#theta (deg)");
-h->GetXaxis()->SetTitleSize(0.04);
-h->GetYaxis()->SetTitleSize(0.05);
-h->SetTitle("sector 2");
-
-h->SetAxisRange(0.4,2.,"X");
-h->SetAxisRange(10.,60.,"Y");
-h->Draw("colz");
-
-
-
-TF1 *f3 = new TF1("f1",thmin, 0.1,2.,2);
-f3->SetParameter(0,2.1);
-f3->SetParameter(1,-0.04);
-// f1->SetParameter(1,1.);
-  f3->SetLineColor(kBlack);
-  f3->SetLineWidth(2);
-  f3->Draw("same");
-  
-TF1 *f4 = new TF1("f2",thmin, 0.05,2.2,2);
- f4->SetParameter(0,25.);
- f4->SetParameter(1,-0.32);
-  f4->SetLineColor(kBlack);
-  f4->SetLineWidth(2);
-// f4->Draw("same"); 
- 
- 
-TF1 *f5 = new TF1("f3",thmin, 0.05,2.2,2);
- f5->SetParameter(0,21.8);
- f5->SetParameter(1,-0.3);
-  f5->SetLineColor(kBlack);
-  f5->SetLineWidth(2);
-// f5->Draw("same");    
-
-c->SaveAs("el_th_vs_p_sector2.pdf");   
-};
-
-
 double fitf( double*x, double*par){
- double s;
+
  //mpip=0.139570;
 double s = (par[0]*x[0]*x[0]*x[0]+par[1]*x[0]*x[0]+par[2]*x[0]+par[3])*exp(-2.8*x[0]);
 //double s = par[0]*sqrt(x[0]+par[2])+par[1];
@@ -171,3 +88,89 @@ double thmin(double *x, double *par) {
    s=(9.5+17./((x[0]-par[1])+0.2))+par[0];
    return s;
 }
+
+
+
+void th_vs_p_el_2(){
+gStyle ->SetPalette(1);
+gStyle ->SetOptLogz(1);
+gStyle->SetOptStat(0);
+gStyle ->SetOptFit(0011);
+gStyle ->SetStatW(0.1);
+gStyle ->SetStatH(0.05);
+gStyle ->SetStatY(0.99);
+gStyle ->SetStatX(0.9);
+gStyle ->SetStatFontSize(0.1);
+gStyle->SetTitleY(1);
+gStyle->SetTitleX(0.56);
+gStyle->SetTitleSize(0.1,"t");
+Short_t j,k;
+ostringstream qqq;
+ostringstream qqq1;
+ostringstream qqq2;
+
+TFile *MyFile = new TFile("../test_proton_fiduch.root","READ");
+
+Double_t M_MEAN [45];
+Double_t M_MEAN_2 [60];
+TCanvas *c = new TCanvas("c","c",0,0,500,500);
+//c -> Divide (2,3);
+//TCanvas *c3= new TCanvas ("c3","c3",0,0,1000,1000);
+//c3->Divide(5,9);
+//TCanvas *c4= new TCanvas ("c4","c4",0,0,1000,1000);
+//c4->Divide(6,12);
+TH1D *h_odn[45];
+Double_t P[45];
+TH1D *h_odn_2[60];
+Double_t P_2[60];
+TH2 *h;
+TH1 *h1;
+TH1 *h2;
+c->cd();
+MyFile->GetObject("th_vs_p/th_vs_p_e_2_2",h);
+c->cd()->SetRightMargin(0.12);
+c->cd()->SetBottomMargin(0.1);
+c->cd()->SetLeftMargin(0.1);
+h->GetXaxis()->SetLabelSize(0.04);
+h->GetXaxis()->SetNdivisions(5);
+h->GetYaxis()->SetLabelSize(0.04);
+h->GetYaxis()->SetNdivisions(4);
+h->GetXaxis()->SetTitle("P (GeV)");
+h->GetYaxis()->SetTitle("#theta (deg)");
+h->GetXaxis()->SetTitleSize(0.04);
+h->GetYaxis()->SetTitleSize(0.05);
+h->SetTitle("sector 2");
+
+h->SetAxisRange(0.4,2.,"X");
+h->SetAxisRange(10.,60.,"Y");
+h->Draw("colz");
+
+
+
+TF1 *f3 = new TF1("f1",thmin, 0.1,2.,2);
+f3->SetParameter(0,2.1);
+f3->SetParameter(1,-0.04);
+// f1->SetParameter(1,1.);
+  f3->SetLineColor(kBlack);
+  f3->SetLineWidth(2);
+  f3->Draw("same");
+  
+TF1 *f4 = new TF1("f2",thmin, 0.05,2.2,2);
+ f4->SetParameter(0,25.);
+ f4->SetParameter(1,-0.32);
+  f4->SetLineColor(kBlack);
+  f4->SetLineWidth(2);
+// f4->Draw("same"); 
+ 
+ 
+TF1 *f5 = new TF1("f3",thmin, 0.05,2.2,2);
+ f5->SetParameter(0,21.8);
+ f5->SetParameter(1,-0.3);
+  f5->SetLineColor(kBlack);
+  f5->SetLineWidth(2);
+// f5->Draw("same");    
+
+c->SaveAs("el_th_vs_p_sector2.pdf");   
+};
+
+

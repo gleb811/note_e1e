@@ -1,3 +1,8 @@
+
+
+
+
+
 void q2vsw() {
 TFile *MyFile = new TFile("q2vsw.root","READ");
 MyFile->ls();
@@ -171,10 +176,10 @@ line19->SetLineWidth(3);
 line19->SetLineColor(0);
 line19->Draw();
 
-TLine *line19 = new TLine(1.625,0.85,1.65,0.85);
-line19->SetLineWidth(3);
-line19->SetLineColor(0);
-line19->Draw();
+TLine *line191 = new TLine(1.625,0.85,1.65,0.85);
+line191->SetLineWidth(3);
+line191->SetLineColor(0);
+line191->Draw();
 
 TLine *line20 = new TLine(1.65,0.85,1.65,0.8);
 line20->SetLineWidth(3);

@@ -1,3 +1,29 @@
+float fida(double *x, double *par) {
+   double s;
+   double th_min;
+     th_min=(11.+8./(0.472*par[0]+0.117));
+     double par1,par2;
+      par1=0.705+1.1*par[0];
+     par2=-63.2-33.3*par[0]; 
+     s = 30.5*pow((sin((x[0]-th_min)*0.01745)),(par1+par2/x[0]+1530./x[0]/x[0]))-1.;
+     if ((!(s>0))&&(!(s<0)))s=0;
+   return s;
+}
+
+float fidb(double *x, double *par) {
+   double s;
+   double th_min;
+     th_min=(11.+8./(0.472*par[0]+0.117));
+     double par1,par2;
+      par1=0.705+1.1*par[0];
+     par2=-63.2-33.3*par[0]; 
+     s = -30.5*pow((sin((x[0]-th_min)*0.01745)),(par1+par2/x[0]+1530./x[0]/x[0]))+1.;
+     if ((!(s>0))&&(!(s<0)))s=0;
+   return s;
+}
+
+
+
 void pim_fid_2dim() {
 
 gStyle ->SetOptLogz(1);
@@ -58,6 +84,7 @@ h1->GetXaxis()->SetTitleSize(0.09);
 h1->GetYaxis()->SetTitleSize(0.09);
 qqq3.str("");
 qqq3 << "sector " << ii ;
+Float_t p,th_min;
 h1->SetTitle(qqq3.str().c_str());
 p = 0.2*(j+1) - 0.1;
 th_min=(10.6+8./(0.472*p+0.117));
@@ -105,26 +132,3 @@ qqq4.str("");
 }; 
 };
 
-double fida(double *x, double *par) {
-   double s;
-   double th_min;
-     th_min=(11.+8./(0.472*par[0]+0.117));
-     double par1,par2;
-      par1=0.705+1.1*par[0];
-     par2=-63.2-33.3*par[0]; 
-     s = 30.5*pow((sin((x[0]-th_min)*0.01745)),(par1+par2/x[0]+1530./x[0]/x[0]))-1.;
-     if ((!(s>0))&&(!(s<0)))s=0;
-   return s;
-}
-
-double fidb(double *x, double *par) {
-   double s;
-   double th_min;
-     th_min=(11.+8./(0.472*par[0]+0.117));
-     double par1,par2;
-      par1=0.705+1.1*par[0];
-     par2=-63.2-33.3*par[0]; 
-     s = -30.5*pow((sin((x[0]-th_min)*0.01745)),(par1+par2/x[0]+1530./x[0]/x[0]))+1.;
-     if ((!(s>0))&&(!(s<0)))s=0;
-   return s;
-}

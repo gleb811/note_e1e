@@ -1,3 +1,56 @@
+double fitf( double*x, double*par){
+
+ //mpip=0.139570;
+double s = par[0]*x[0]*x[0]*x[0]+par[1]*x[0]*x[0]+par[2]*x[0]+par[3];
+//double s = sqrt(par[0]*x[0]+par[1])+par[2];
+
+// double s =par[0]*x[0]*x[0]+par[1]*x[0]+par[2];
+//double s = par[0]*x[0]/sqrt(par[1]*x[0]*x[0]+par[2]) + par[3];
+return s;
+} ;
+
+double funct(double *x, double *par) {
+   double s;
+  
+     s = 26.5087*x[0]*x[0]*x[0] -116.557*x[0]*x[0]+ 175.167*x[0]-61.7717+par[0];
+   return s;
+};
+
+double funct22(double *x, double *par) {
+   double s;
+  
+     s = (304.23*(x[0]-par[1])*(x[0]-par[1])*(x[0]-par[1]) -255.798*(x[0]-par[1])*(x[0]-par[1])+497.462*(x[0]-par[1]) +38.0385)*exp(-1.6*(x[0]-par[1])) +par[0];
+   return s;
+};
+double funct_new2(double *x, double *par) {
+   double s;
+  
+     s = pow((x[0]-par[1]-0.304992),(0.0758186))*91.5643-48.2057 + par[0];
+   return s;
+};
+
+double funct_new3(double *x, double *par) {
+   double s;
+  
+     s = pow((x[0]-par[1] -0.36848),( 0.0864219))*70.4769  -34.9998+ par[0];
+   return s;
+};
+double funct_new7(double *x, double *par) {
+   double s;
+  
+     s = pow((x[0]-par[1]-0.374992),(0.0758186))*91.5643-48.2057 + par[0];
+   return s;
+};
+
+double funct_new9(double *x, double *par) {
+   double s;
+  
+     s = pow((x[0]-par[1]-0.410992),(0.0758186))*91.5643-48.2057 + par[0];
+   return s;
+};
+
+
+
 void th_vs_p_p_1(){
 gStyle ->SetPalette(1);
 gStyle ->SetOptLogz(1);
@@ -136,14 +189,14 @@ TF1 *f4 = new TF1("f2",funct22, 0.1,1.,2);
 //  f4->Draw("same");
   
       
-  TF1 *f3 = new TF1("f1",funct22, 0.1,1.,2);
+f3 = new TF1("f1",funct22, 0.1,1.,2);
  f3->SetParameter(0,-23);
  f3->SetParameter(1,-0.122);
   f3->SetLineColor(kBlack);
   f3->SetLineWidth(2);
 //   f3->Draw("same");
    
-TF1 *f4 = new TF1("f2",funct22, 0.1,1.,2);
+f4 = new TF1("f2",funct22, 0.1,1.,2);
  f4->SetParameter(0,-30);
  f4->SetParameter(1,-0.04);
   f4->SetLineColor(kBlack);
@@ -151,7 +204,7 @@ TF1 *f4 = new TF1("f2",funct22, 0.1,1.,2);
 //  f4->Draw("same"); 
   
   
-TF1 *f1 = new TF1("f1",funct_new2, 0.3+0.04,1.8,2);
+f1 = new TF1("f1",funct_new2, 0.3+0.04,1.8,2);
  f1->SetParameter(0,3.5);
  f1->SetParameter(1,0.04);
   f1->SetLineColor(kBlack);
@@ -174,7 +227,7 @@ TF1 *f6 = new TF1("f6",funct_new7, 0.3+0.11,1.8,2);
   f6->SetLineWidth(2);
   f6->Draw("same"); 
   
-TF1 *f9 = new TF1("f9",funct_new9, 0.3+0.146,1.8,2);
+f9 = new TF1("f9",funct_new9, 0.3+0.146,1.8,2);
  f9->SetParameter(0,0.5);
  f9->SetParameter(1,0.04);
   f9->SetLineColor(kBlack);
@@ -182,7 +235,7 @@ TF1 *f9 = new TF1("f9",funct_new9, 0.3+0.146,1.8,2);
   f9->Draw("same"); 
 
 
-TF1 *f2 = new TF1("f2",funct_new3, 0.365+0.05,1.8,1);
+f2 = new TF1("f2",funct_new3, 0.365+0.05,1.8,1);
  f2->SetParameter(0,6);
  f2->SetParameter(1,0.05);
   f2->SetLineColor(kBlack);
@@ -197,53 +250,3 @@ c->SaveAs("p_th_vs_p_sector1.pdf");
 };
 
 
-double fitf( double*x, double*par){
- double s;
- //mpip=0.139570;
-double s = par[0]*x[0]*x[0]*x[0]+par[1]*x[0]*x[0]+par[2]*x[0]+par[3];
-//double s = sqrt(par[0]*x[0]+par[1])+par[2];
-
-// double s =par[0]*x[0]*x[0]+par[1]*x[0]+par[2];
-//double s = par[0]*x[0]/sqrt(par[1]*x[0]*x[0]+par[2]) + par[3];
-return s;
-} ;
-
-double funct(double *x, double *par) {
-   double s;
-  
-     s = 26.5087*x[0]*x[0]*x[0] -116.557*x[0]*x[0]+ 175.167*x[0]-61.7717+par[0];
-   return s;
-};
-
-double funct22(double *x, double *par) {
-   double s;
-  
-     s = (304.23*(x[0]-par[1])*(x[0]-par[1])*(x[0]-par[1]) -255.798*(x[0]-par[1])*(x[0]-par[1])+497.462*(x[0]-par[1]) +38.0385)*exp(-1.6*(x[0]-par[1])) +par[0];
-   return s;
-};
-double funct_new2(double *x, double *par) {
-   double s;
-  
-     s = pow((x[0]-par[1]-0.304992),(0.0758186))*91.5643-48.2057 + par[0];
-   return s;
-};
-
-double funct_new3(double *x, double *par) {
-   double s;
-  
-     s = pow((x[0]-par[1] -0.36848),( 0.0864219))*70.4769  -34.9998+ par[0];
-   return s;
-};
-double funct_new7(double *x, double *par) {
-   double s;
-  
-     s = pow((x[0]-par[1]-0.374992),(0.0758186))*91.5643-48.2057 + par[0];
-   return s;
-};
-
-double funct_new9(double *x, double *par) {
-   double s;
-  
-     s = pow((x[0]-par[1]-0.410992),(0.0758186))*91.5643-48.2057 + par[0];
-   return s;
-};

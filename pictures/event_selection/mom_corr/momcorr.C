@@ -70,7 +70,7 @@ g4->GetParameters(&par_b[3]);
 total1->SetParameters(par_b);
 h->Fit(total1,"R+");
 h->Draw();
-Double_t MEAN1 = mstotal1->GetParameter(1);
+Double_t MEAN1 = total1->GetParameter(1);
 MEAN_b[j] = MEAN1;
 cout << "QQQ" << MEAN1;
 
@@ -106,7 +106,7 @@ g3->GetParameters(&par_a[3]);
 total->SetParameters(par_a);
 h1->Fit(total,"R+");
 h1->Draw();
-Double_t MEAN = mstotal->GetParameter(1);
+Double_t MEAN = total->GetParameter(1);
 MEAN_a[j] = MEAN;
 meantot=meantot+MEAN;
 //cout << "QQQ" << MEAN_a[j];

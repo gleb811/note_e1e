@@ -52,7 +52,7 @@ h1->GetXaxis()->SetLabelSize(0.07);
 h1->GetZaxis()->SetLabelSize(0.07);
 h1->GetXaxis()->SetTitleOffset(0.8);
 h1->GetXaxis()->SetTitle("#theta_{cc} (deg)"); 
-h1->GetXaxis()->SetRange(50,200);
+h1->GetXaxis()->SetRange(50,180);
 h1->Draw("col");
 };
 

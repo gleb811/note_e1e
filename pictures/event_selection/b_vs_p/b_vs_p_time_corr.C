@@ -1,3 +1,99 @@
+
+double beta_p(double *x, double *par) {
+   double s,mp;
+  mp=0.938272;
+ //  mp=1.875612793;
+  // mp=0.;
+    s = x[0]/sqrt(mp*mp+x[0]*x[0]);
+       return s;
+};
+
+double beta_p_high(double *x, double *par) {
+   double s,mp;
+  mp=0.938272;
+ //  mp=1.875612793;
+  // mp=0.;
+  s = ((x[0]/(sqrt(x[0]*x[0]+0.938*0.938))+0.02)*(1.2+0.92*x[0])/(1.+x[0]));
+//cout << s << endl;
+       return s;
+};
+
+double beta_p_low(double *x, double *par) {
+   double s,mp;
+  mp=0.938272;
+ //  mp=1.875612793;
+  // mp=0.;
+  s = ((x[0]/(sqrt(x[0]*x[0]+0.938*0.938))-0.05)/((1.+x[0])/(0.9+1.06*x[0])));
+//cout << s << endl;
+       return s;
+};
+
+double beta_pip(double *x, double *par) {
+   double s,mp;
+  mp=0.139;
+ //  mp=1.875612793;
+  // mp=0.;
+    s = x[0]/sqrt(mp*mp+x[0]*x[0]);
+       return s;
+};
+
+double beta_pip_high(double *x, double *par) {
+   double s,mp;
+  mp=0.139;
+ //  mp=1.875612793;
+  // mp=0.;
+    s =(206.- x[0]- 0.02);
+    s = s*(pow(((200.-x[0])/(200.+x[0])),0.7)*(x[0]+0.05));
+    s = s/sqrt((x[0]+0.05)*(x[0]+0.05)+0.019);
+    s = s/(200.+x[0]+0.02) + 0.02; 
+       return s;
+};
+       
+double beta_pip_low(double *x, double *par) {
+   double s,mp;
+  mp=0.139;
+ //  mp=1.875612793;
+  // mp=0.;
+  s =  ((((1.+5.*1.07*(x[0]-0.07))*(x[0]-0.07))))/sqrt((x[0]-0.07)*(x[0]-0.07)+0.138*0.138)/(1+5.*(x[0]-0.07))-0.1;
+//    s =(206.- x[0]- 0.02);
+//    s = s*(pow(((200.-x[0])/(200.+x[0])),0.7)*(x[0]+0.05));
+//    s = s/sqrt((x[0]+0.05)*(x[0]+0.05)+0.019);
+//    s = s/(200.+x[0]+0.02) + 0.02; 
+       return s;       
+       
+};
+
+double beta_high_paddles(double *x, double *par) {
+   double s;
+    s = x[0]/sqrt(x[0]*x[0]+0.938*0.938) + 0.03;
+    s = s*(1.2+0.92*x[0])/(1+x[0]);
+//    s = (1+5*1.4*(x[0]-0.07))/(1+5*(x[0]-0.07));
+//    s = s*(x[0]-0.07)/sqrt((x[0]-0.07)*(x[0]-0.07)+0.138*0.138);
+//    s = s - 0.4;
+       return s;       
+       
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void b_vs_p_time_corr() {
 
 gStyle->SetOptStat(0);
@@ -184,79 +280,4 @@ c->SaveAs("b_vs_p_positiv_time_corr.pdf");
 
 }
 
-
-double beta_p(double *x, double *par) {
-   double s,mp;
-  mp=0.938272;
- //  mp=1.875612793;
-  // mp=0.;
-    s = x[0]/sqrt(mp*mp+x[0]*x[0]);
-       return s;
-};
-
-double beta_p_high(double *x, double *par) {
-   double s,mp;
-  mp=0.938272;
- //  mp=1.875612793;
-  // mp=0.;
-  s = ((x[0]/(sqrt(x[0]*x[0]+0.938*0.938))+0.02)*(1.2+0.92*x[0])/(1.+x[0]));
-//cout << s << endl;
-       return s;
-};
-
-double beta_p_low(double *x, double *par) {
-   double s,mp;
-  mp=0.938272;
- //  mp=1.875612793;
-  // mp=0.;
-  s = ((x[0]/(sqrt(x[0]*x[0]+0.938*0.938))-0.05)/((1.+x[0])/(0.9+1.06*x[0])));
-//cout << s << endl;
-       return s;
-};
-
-double beta_pip(double *x, double *par) {
-   double s,mp;
-  mp=0.139;
- //  mp=1.875612793;
-  // mp=0.;
-    s = x[0]/sqrt(mp*mp+x[0]*x[0]);
-       return s;
-};
-
-double beta_pip_high(double *x, double *par) {
-   double s,mp;
-  mp=0.139;
- //  mp=1.875612793;
-  // mp=0.;
-    s =(206.- x[0]- 0.02);
-    s = s*(pow(((200.-x[0])/(200.+x[0])),0.7)*(x[0]+0.05));
-    s = s/sqrt((x[0]+0.05)*(x[0]+0.05)+0.019);
-    s = s/(200.+x[0]+0.02) + 0.02; 
-       return s;
-};
-       
-double beta_pip_low(double *x, double *par) {
-   double s,mp;
-  mp=0.139;
- //  mp=1.875612793;
-  // mp=0.;
-  s =  ((((1.+5.*1.07*(x[0]-0.07))*(x[0]-0.07))))/sqrt((x[0]-0.07)*(x[0]-0.07)+0.138*0.138)/(1+5.*(x[0]-0.07))-0.1;
-//    s =(206.- x[0]- 0.02);
-//    s = s*(pow(((200.-x[0])/(200.+x[0])),0.7)*(x[0]+0.05));
-//    s = s/sqrt((x[0]+0.05)*(x[0]+0.05)+0.019);
-//    s = s/(200.+x[0]+0.02) + 0.02; 
-       return s;       
-       
-};
-
-double beta_high_paddles(double *x, double *par) {
-   double s;
-    s = x[0]/sqrt(x[0]*x[0]+0.938*0.938) + 0.03;
-    s = s*(1.2+0.92*x[0])/(1+x[0]);
-//    s = (1+5*1.4*(x[0]-0.07))/(1+5*(x[0]-0.07));
-//    s = s*(x[0]-0.07)/sqrt((x[0]-0.07)*(x[0]-0.07)+0.138*0.138);
-//    s = s - 0.4;
-       return s;       
-       
-};
 

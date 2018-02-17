@@ -16,57 +16,12 @@ TLegend *leg;
 TSpline5 *spline;
 ostringstream qqq;
  
-void draw_xsec() {
-#include <TH2.h>
-#include <TH1.h>
-#include <TH3.h>
-#include <THnSparse.h>
-gStyle->SetTitleSize(0.07,"t");
-gStyle->SetTitleY(1.01);
-gStyle->SetOptStat(0);
-gStyle->SetErrorX(0);
-gErrorIgnoreLevel = kError;
-gStyle->SetStatY(0.88); 
+Double_t f_fit(Double_t *x, Double_t *par) {
 
+return spline->Eval(x[0]);
 
+}
 
-
-
-
-
-//Define input files
-
-TFile *file_cr_sec_pim = new TFile("out_cr_sec_all_top_final_bin_corr.root","READ");
-
-
- for (Int_t qq2=0; qq2<12;qq2++) {
- Q2_bin = 0.425 + 0.05*qq2;
-
-
-//for (Int_t i=13; i<14;i++) {
-for (Int_t i=get_min_w(Q2_bin); i<get_max_w(Q2_bin);i++) {
- W_bin[i] = 1.3125+0.025*i; 
-
-read_data_rec(file_cr_sec_pim,i);
-
-draw_1d_canvas(i,qq2);
-
-//m_pip_p->Draw();
-
-
-
-
-
-
-
-};
-};
-
-
-
-//file_out->Close();
-
-}; //end of main program
 
 
 TH1D *h_bin_corr_theta(TH1D *h) {
@@ -428,11 +383,6 @@ qqq.str("");
 };
 
 
-Double_t f_fit(Double_t *x, Double_t *par) {
-
-return spline->Eval(x[0]);
-
-}
 
 void draw_1d_canvas( Int_t i, Int_t qq2 ) {
 
@@ -571,3 +521,55 @@ qqq.str("");
 //c->Delete();
 
 };
+
+void draw_xsec() {
+#include <TH2.h>
+#include <TH1.h>
+#include <TH3.h>
+#include <THnSparse.h>
+gStyle->SetTitleSize(0.07,"t");
+gStyle->SetTitleY(1.01);
+gStyle->SetOptStat(0);
+gStyle->SetErrorX(0);
+gErrorIgnoreLevel = kError;
+gStyle->SetStatY(0.88); 
+
+
+
+
+
+
+
+//Define input files
+
+TFile *file_cr_sec_pim = new TFile("out_cr_sec_all_top_final_bin_corr.root","READ");
+
+
+ for (Int_t qq2=0; qq2<12;qq2++) {
+ Q2_bin = 0.425 + 0.05*qq2;
+
+
+//for (Int_t i=13; i<14;i++) {
+for (Int_t i=get_min_w(Q2_bin); i<get_max_w(Q2_bin);i++) {
+ W_bin[i] = 1.3125+0.025*i; 
+
+read_data_rec(file_cr_sec_pim,i);
+
+draw_1d_canvas(i,qq2);
+
+//m_pip_p->Draw();
+
+
+
+
+
+
+
+};
+};
+
+
+
+//file_out->Close();
+
+}; //end of main program

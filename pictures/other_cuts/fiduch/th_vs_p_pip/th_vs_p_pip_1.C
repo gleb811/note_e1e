@@ -1,3 +1,71 @@
+double fitf( double*x, double*par){
+
+ //mpip=0.139570;
+double s = (par[0]*x[0]*x[0]*x[0]+par[1]*x[0]*x[0]+par[2]*x[0]+par[3])*exp(-2*x[0]);
+//double s = sqrt(par[0]*x[0]+par[1])+par[2];
+
+ //double s =par[0]*x[0]*x[0]+par[1]*x[0]+par[2];
+//double s = par[0]*x[0]/sqrt(par[1]*x[0]*x[0]+par[2]) + par[3];
+return s;
+} ;
+
+double funct(double *x, double *par) {
+   double s;
+  
+     s = (255.491*x[0]*x[0]*x[0] -275.623*x[0]*x[0]+ 450*x[0]+34.3076+par[0])*exp(-2*x[0]);
+   return s;
+};
+
+double funct5(double *x, double *par) {
+   double s;
+  
+     s = pow((x[0]-0.416536),(0.108376))*67.4593-21.4374+par[0];
+   return s;
+};
+
+
+double funct_f(double *x, double *par) {
+   double s;
+  
+     s = (pow((x[0]+par[0]),(par[1]))*par[2]+par[3])*exp(-0.5*x[0]);
+   return s;
+};
+
+
+double funct_f_2(double *x, double *par) {
+   double s;
+  
+     s = (pow((x[0]-0.0575818),( 0.075643))*238.248-115.039)*exp(-0.5*x[0])+par[0];
+   return s;
+};
+
+
+double funct_f_3(double *x, double *par) {
+   double s;
+  
+     s = (pow((x[0]-0.103718),(0.0703664))*252.822-133.024)*exp(-0.5*x[0])+par[0];
+   return s;
+};
+
+
+
+
+
+double funct6(double *x, double *par) {
+   double s;
+  
+     s = pow((x[0] -0.454098),(0.0912936))*58.2946-20.4843+par[0];
+   return s;
+};
+double funct22(double *x, double *par) {
+   double s;
+  
+     s = (304.23*(x[0]-par[1])*(x[0]-par[1])*(x[0]-par[1]) -255.798*(x[0]-par[1])*(x[0]-par[1])+497.462*(x[0]-par[1]) +38.0385)*exp(-1.85*(x[0]-par[1])) +par[0];
+   return s;
+};
+
+
+
 void th_vs_p_pip_1(){
 gStyle ->SetPalette(1);
 gStyle ->SetOptLogz(1);
@@ -55,13 +123,13 @@ qqq.str(" ");
 //if (k<14) h_odn[k]->SetAxisRange(0.6,1.1,"X");
 //if (k>14) 
 
-if ((k==0)) h_odn[k]->SetAxisRange(40.,50.,"X");
-if ((k==1)) h_odn[k]->SetAxisRange(48.,55.,"X");
-if ((k==2)) h_odn[k]->SetAxisRange(57.,60.,"X");
-if ((k==3)) h_odn[k]->SetAxisRange(65.,74.,"X");
-if ((k==4)) h_odn[k]->SetAxisRange(68.,74.,"X");
-if ((k==5)) h_odn[k]->SetAxisRange(70.,74.,"X");
-if ((k>5)) h_odn[k]->SetAxisRange(71.,83.,"X");
+if (k == 0) h_odn[k]->SetAxisRange(40.,50.,"X");
+if (k == 1) h_odn[k]->SetAxisRange(48.,55.,"X");
+if (k == 2) h_odn[k]->SetAxisRange(57.,60.,"X");
+if (k == 3) h_odn[k]->SetAxisRange(65.,74.,"X");
+if (k == 4) h_odn[k]->SetAxisRange(68.,74.,"X");
+if (k == 5) h_odn[k]->SetAxisRange(70.,74.,"X");
+if (k > 5) h_odn[k]->SetAxisRange(71.,83.,"X");
 
 h_odn[k]->Draw();
 Int_t t;
@@ -156,9 +224,9 @@ qqq.str(" ");
 //if (k>14) 
 if (k<=4+3) h_odn_2[k]->SetAxisRange(21.,26,"X");
 //if ((k==4)) h_odn[k]->SetAxisRange(10.,40.,"X");
-if ((k==0)) h_odn_2[k]->SetAxisRange(10.,12.,"X");
-if ((k==1)) h_odn_2[k]->SetAxisRange(15.,16.,"X");
-if ((k==2)) h_odn_2[k]->SetAxisRange(17.,19.,"X");
+if (k==0) h_odn_2[k]->SetAxisRange(10.,12.,"X");
+if (k==1) h_odn_2[k]->SetAxisRange(15.,16.,"X");
+if (k==2) h_odn_2[k]->SetAxisRange(17.,19.,"X");
 //if ((k>=0)&&(k<=3)) h_odn[k]->SetAxisRange(23.,29.,"X");
 if ((k>=5+3)&&(k<10+3)) h_odn_2[k]->SetAxisRange(24.,29.,"X");
 if ((k>=10+3)&&(k<22+3)) h_odn_2[k]->SetAxisRange(28.,35.,"X");
@@ -208,7 +276,7 @@ h->GetYaxis()->SetTitle("#theta (deg)");
 h->GetXaxis()->SetTitleSize(0.04);
 h->GetYaxis()->SetTitleSize(0.05);
 h->SetTitle("sector 1");
-TGraph*gr1 = new TGraph (45, P, M_MEAN);
+gr1 = new TGraph (45, P, M_MEAN);
 /*gr1->Draw("P*");
 
 TF1 *func = new TF1("fit",funct4,0.447,1.9,4);
@@ -227,14 +295,14 @@ gr1->Fit("fit");
 //func->SetLineWidth(1);
 func->Draw("same");*/
 
-TF1 *f1 = new TF1("f1",funct5, 0.41,1.8,1);
+f1 = new TF1("f1",funct5, 0.41,1.8,1);
  f1->SetParameter(0,0.);
 // f1->SetParameter(1,1.);
   f1->SetLineColor(kBlack);
   f1->SetLineWidth(2);
 //   f1->Draw("same");
    
-TF1 *f2 = new TF1("f2",funct6, 0.448,1.8,1);
+f2 = new TF1("f2",funct6, 0.448,1.8,1);
  f2->SetParameter(0,0.9);
 // f1->SetParameter(1,1.);
   f2->SetLineColor(kBlack);
@@ -271,68 +339,3 @@ c->SaveAs("pip_th_vs_p_sector1.pdf");
 };
 
 
-double fitf( double*x, double*par){
- double s;
- //mpip=0.139570;
-double s = (par[0]*x[0]*x[0]*x[0]+par[1]*x[0]*x[0]+par[2]*x[0]+par[3])*exp(-2*x[0]);
-//double s = sqrt(par[0]*x[0]+par[1])+par[2];
-
- //double s =par[0]*x[0]*x[0]+par[1]*x[0]+par[2];
-//double s = par[0]*x[0]/sqrt(par[1]*x[0]*x[0]+par[2]) + par[3];
-return s;
-} ;
-
-double funct(double *x, double *par) {
-   double s;
-  
-     s = (255.491*x[0]*x[0]*x[0] -275.623*x[0]*x[0]+ 450*x[0]+34.3076+par[0])*exp(-2*x[0]);
-   return s;
-};
-
-double funct5(double *x, double *par) {
-   double s;
-  
-     s = pow((x[0]-0.416536),(0.108376))*67.4593-21.4374+par[0];
-   return s;
-};
-
-
-double funct_f(double *x, double *par) {
-   double s;
-  
-     s = (pow((x[0]+par[0]),(par[1]))*par[2]+par[3])*exp(-0.5*x[0]);
-   return s;
-};
-
-
-double funct_f_2(double *x, double *par) {
-   double s;
-  
-     s = (pow((x[0]-0.0575818),( 0.075643))*238.248-115.039)*exp(-0.5*x[0])+par[0];
-   return s;
-};
-
-
-double funct_f_3(double *x, double *par) {
-   double s;
-  
-     s = (pow((x[0]-0.103718),(0.0703664))*252.822-133.024)*exp(-0.5*x[0])+par[0];
-   return s;
-};
-
-
-
-
-
-double funct6(double *x, double *par) {
-   double s;
-  
-     s = pow((x[0] -0.454098),(0.0912936))*58.2946-20.4843+par[0];
-   return s;
-};
-double funct22(double *x, double *par) {
-   double s;
-  
-     s = (304.23*(x[0]-par[1])*(x[0]-par[1])*(x[0]-par[1]) -255.798*(x[0]-par[1])*(x[0]-par[1])+497.462*(x[0]-par[1]) +38.0385)*exp(-1.85*(x[0]-par[1])) +par[0];
-   return s;
-};

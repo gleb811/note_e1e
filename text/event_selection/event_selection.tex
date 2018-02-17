@@ -127,7 +127,7 @@ h=\frac{(\overrightarrow{S} \cdot \overrightarrow{P_{0}})+D}{\left |\overrightar
 \label{eq:cc_h_distance}
 \end{equation}
 where components of $\overrightarrow{P_{0}}$ are available in  DCPB bank ($x\_sc, y\_sc, z\_sc$). 
- A tangent to the particle track at the point of intersection with the CC plane ($ \vec t$) is shown in Fig.~\ref{fig:cc_plane_def} by a dashed line and can be written as 
+ A tangent to the particle track (the track is shown by a dashed line in~Fig.~\ref{fig:cc_plane_def})  at the point of intersection with the CC plane ($ \vec t$) can be written as 
 \begin{equation}
 \left | \overrightarrow{t} \right |=\frac{h}{cos(\alpha )}.
 \label{eq:cc_t_vec} 
@@ -174,7 +174,7 @@ The quantity~\ref{eq:cc_ratio} is shown by the color code in Fig.~\ref{fig:ph_vs
 \frac{number\,\, of\,\, events\,\,  inside\,\, (\theta_{cc},\varphi_{cc})\,\, bin\,\, with\,\, more\,\, than\,\, 5\,\, photoelectrons\,\, in\,\, CC}{total\,\, number\,\, of\,\, events\,\,  inside\,\, (\theta_{cc},\varphi_{cc})\,\, bin}
 \label{eq:cc_ratio}
 \end{equation}
-The edges of the distributions in Fig.~\ref{fig:ph_vs_th_cc} are sharp due to the fiducial cut that iss applied in the CC plane~\ref{eq:cc_fiduch}. 
+The edges of the distributions in Fig.~\ref{fig:ph_vs_th_cc} are sharp due to the fiducial cut that is applied in the CC plane~\ref{eq:cc_fiduch}. 
 The shape of this cut  is taken from~\cite{Khetarpal:2010}.
 \begin{equation}
 \begin{aligned}
@@ -255,7 +255,7 @@ mass, momentum, and velocity
 \label{eq:hadron_hadronmass}
 \end{equation}
 
-For the hadron identification, only events with electron candidates that have beed selected in the previous step are used.
+For the hadron identification, only events with electron candidates that have been selected in the previous step are used.
 $\beta$ versus momentum distributions are plotted for each TOF scintillator in each CLAS sector (see example plots for CLAS sector one in Fig.~\ref{fig:b_vs_p_positive} for positively charged particles and in Fig.~\ref{fig:b_vs_p_negative} for preliminary selected $\pi^{-}$ candidates). 
 
 It needs to be mentioned that in order to simplify the analysis process the preliminary particle id was made on an initial step of converting data from the BOS files to the files with ROOT trees. It leads to the fact that in 
@@ -414,7 +414,7 @@ Figure~\ref{fig:el_mom_corr_sim} shows differences between thrown and reconstruc
 While traveling through the detector and the target, the proton loses part of its energy due to interaction with media, hence the measured momentum is lower than the one the proton actually had right after the interaction. This effect is especially important for the low-energy protons and can lead to misdetermination of various kinematical quantities. GSIM simulation of the CLAS detector  correctly propagates protons through the media and is used to account for this effect by using both information about the generated and reconstructed protons. 
 
 To obtain the correction function, event distributions for the differences between generated
-and reconstructed proton momenta are binned in proton momentum and proton angle $\theta$ and fit by Gaussians. The in this way obtained peak positions are fit as function of proton momentum and proton angle $\theta$.
+and reconstructed proton momenta are binned in proton momentum and proton angle $\theta$ and fit by Gaussians. Then in this way obtained peak positions are fit as function of proton momentum and proton angle $\theta$.
 The results are shown in Fig.~\ref{fig:eloss}. The function shown in Fig.~\ref{fig:eloss} gives the percentage of  the momentum that protons lose when they move through the detector and target media.
 This function is used to correct the momentum both in the simulation and the data.
 

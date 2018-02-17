@@ -1,3 +1,15 @@
+Float_t fida(double *x, double *par) {
+   Float_t s;
+   double th_min1;
+     th_min1=(9.5+17./(par[0]+0.2));
+     double par1,par2;
+      par1=0.85+1.1*par[0];
+     par2=-62.8-30.*par[0]; 
+     s = par[1]*37.3*pow((sin((x[0]-th_min1)*0.01745)),(par1+par2/x[0]+1525./x[0]/x[0]))-par[1]*0;
+   return s;
+}
+
+
 void fid_new2() {
 
 gStyle->SetCanvasBorderSize(50);
@@ -31,9 +43,9 @@ TCanvas *c_arr[17];
 ostringstream qqq2;
 ostringstream qqq3;
 ostringstream qqq4;
-double p;
+Float_t p,th_min;
 
-for (j=9; j<10; j++){
+for (j=0; j<10; j++){
 qqq2.str("");
 qqq2 << "c_arr" << j+1;
 c_arr[j] = new TCanvas (qqq2.str().c_str(),qqq2.str().c_str(),0,0,600,400);
@@ -74,6 +86,7 @@ qqq3 << "sector" << ii ;
 h1->SetTitle(qqq3.str().c_str());
 p = 0.4+0.08*(j+1) - 0.04;
 th_min=(9.5+17./(p+0.2))+1.;
+cout << th_min << endl;
  TF1 *f1 = new TF1("f1",fida,th_min,50.,2);
  f1->SetParameter(0,p);
  f1->SetParameter(1,1.);
@@ -88,7 +101,8 @@ th_min=(9.5+17./(p+0.2))+1.;
  f2->SetLineWidth(2);
 
    f2->Draw("same");
-      
+ 
+    
 TLine *line_l = new TLine(th_min,-30,th_min,30);
 line_l->SetLineColor(kBlack);
 line_l->SetLineWidth(2);
@@ -100,6 +114,7 @@ line_r->SetLineWidth(2);
 line_r->Draw("same");
  
 };
+
 c_arr[j]->cd();
 newpad = new TPad("newpad","a transparent pad",0.,0.,1.,1.);
  newpad->SetFillStyle(4000);
@@ -119,13 +134,4 @@ qqq4.str("");
 }; 
 };
 
-double fida(double *x, double *par) {
-   double s;
-   double th_min;
-     th_min=(9.5+17./(par[0]+0.2));
-     double par1,par2;
-      par1=0.85+1.1*par[0];
-     par2=-62.8-30.*par[0]; 
-     s = par[1]*37.3*pow((sin((x[0]-th_min)*0.01745)),(par1+par2/x[0]+1525./x[0]/x[0]))-par[1]*0;
-   return s;
-}
+

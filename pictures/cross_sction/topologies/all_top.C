@@ -9,57 +9,13 @@ TH1D *alpha_p_noempty,*alpha_pim_noempty,*alpha_pip_noempty;
 TH1D *m_pip_p_model,*m_pip_pim_model,*m_pim_p_model;
 TH1D *theta_p_model,*theta_pim_model,*theta_pip_model;
 TH1D *alpha_p_model,*alpha_pim_model,*alpha_pip_model;
-
+TCanvas *c = new TCanvas("c","c",700,700);
 Float_t Q2_bin,W_bin[30];
 
 TLegend *leg;
 
 ostringstream qqq;
  
-void all_top() {
-#include <TH2.h>
-#include <TH1.h>
-#include <TH3.h>
-#include <THnSparse.h>
-gStyle->SetTitleSize(0.07,"t");
-gStyle->SetTitleY(1.01);
-gStyle->SetOptStat(0);
-gStyle->SetErrorX(0);
-gErrorIgnoreLevel = kError;
-gStyle->SetStatY(0.88); 
-TCanvas *c = new TCanvas("c","c",700,700);
-
-leg_w_int = new TLegend(0.11,0.7,0.89,0.89); 
-leg_w_int->SetNColumns(3);
-leg_w_int->SetFillStyle(0);
-
-
-
-
-//Define input files
-
-TFile *file_cr_sec_pim = new TFile("out_cr_sec_all_top.root","READ");
-
-
- for (Int_t qq2=2; qq2<3;qq2++) {
- Q2_bin = 0.425 + 0.05*qq2;
-
-
-for (Int_t i=13; i<14;i++) {
-// for (i=get_min_w(Q2_bin); i<get_max_w(Q2_bin);i++) {
- W_bin[i] = 1.3125+0.025*i; 
-
-read_data_rec(file_cr_sec_pim,i);
-
-draw_1d_canvas(i,qq2);
-//alpha_p->Draw();
-
-};
-};
-
-c->Print("cr_sec_all_top.pdf");
-
-}; //end of main program
 
 
 void draw_1d_hist (Int_t canvas, TH1D *h, string title, string name, string ytitle, string xtitle, Int_t color, string draw_options, string distr_flag,Int_t i) {
@@ -457,3 +413,50 @@ leg->Draw();
 
 
 };
+
+
+
+void all_top() {
+#include <TH2.h>
+#include <TH1.h>
+#include <TH3.h>
+#include <THnSparse.h>
+gStyle->SetTitleSize(0.07,"t");
+gStyle->SetTitleY(1.01);
+gStyle->SetOptStat(0);
+gStyle->SetErrorX(0);
+gErrorIgnoreLevel = kError;
+gStyle->SetStatY(0.88); 
+
+leg_w_int = new TLegend(0.11,0.7,0.89,0.89); 
+leg_w_int->SetNColumns(3);
+leg_w_int->SetFillStyle(0);
+
+
+
+
+//Define input files
+
+TFile *file_cr_sec_pim = new TFile("out_cr_sec_all_top.root","READ");
+
+
+ for (Int_t qq2=2; qq2<3;qq2++) {
+ Q2_bin = 0.425 + 0.05*qq2;
+
+
+for (Int_t i=13; i<14;i++) {
+// for (i=get_min_w(Q2_bin); i<get_max_w(Q2_bin);i++) {
+ W_bin[i] = 1.3125+0.025*i; 
+
+read_data_rec(file_cr_sec_pim,i);
+
+draw_1d_canvas(i,qq2);
+//alpha_p->Draw();
+
+};
+};
+
+c->Print("cr_sec_all_top.pdf");
+
+}; //end of main program
+

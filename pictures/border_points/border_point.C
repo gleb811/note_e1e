@@ -1,4 +1,4 @@
-gROOT->Reset();
+//gROOT->Reset();
 TH1D *m_pip_p,*m_pip_pim,*m_pim_p;
 TH1D *theta_p,*theta_pim,*theta_pip;
 TH1D *alpha_p,*alpha_pim,*alpha_pip;
@@ -14,7 +14,6 @@ TH2D *q2vsw = new TH2D("q2vsw","q2vsw",22,1.3,1.85,12,0.4,1.);
 TH2D *q2vsw_q2_corr = new TH2D("q2vsw_q2_corr","q2vsw_q2_corr",22,1.3,1.85,12,0.4,1.);
 
 TCanvas *c = new TCanvas("c","c",900,300);
-c->Divide(3,1);
 
 TH1D *h_q2;
 
@@ -32,85 +31,13 @@ TSpline5 *spline;
 ostringstream qqq;
 
 TF1 *f_q2 = new TF1("f_q2","pol2",0.4,1.);
- 
-void border_point() {
-#include <TH2.h>
-#include <TH1.h>
-#include <TH3.h>
-#include <THnSparse.h>
-gStyle->SetTitleSize(0.07,"t");
-gStyle->SetTitleY(1.01);
-gStyle->SetOptStat(0);
-gStyle->SetErrorX(0);
-gErrorIgnoreLevel = kError;
-gStyle->SetStatY(0.88); 
 
+Double_t f_fit(Double_t *x, Double_t *par) {
 
+return spline->Eval(x[0]);
 
+}
 
-
-
-
-//Define input files
-
-TFile *file_cr_sec_pim = new TFile("out_cr_sec_all_top_final_bin_corr.root","READ");
-
-
- for (Int_t qq2=10; qq2<11;qq2++) {
- Q2_bin = 0.425 + 0.05*qq2;
-
-
-for (Int_t i=10; i<11;i++) {
-// for (Int_t i=get_min_w(Q2_bin); i<get_max_w(Q2_bin);i++) {
- W_bin[i] = 1.3125+0.025*i; 
-
-read_data_rec(file_cr_sec_pim,i);
-c->Divide(3,1);
-
-
-
-c->cd(1);
-m_pip_p->Draw();
-gPad->Update();
-TLine *line1 = new TLine(0.938272+0.13957,0.,0.938272+0.13957,gPad->GetUymax());
-line1->SetLineWidth(3);
-line1->Draw();
-TLine *line2 = new TLine(W_bin[i]-0.13957,0.,W_bin[i]-0.13957,gPad->GetUymax());
-line2->SetLineWidth(3);
-line2->Draw();
-
-
-c->cd(2);
-m_pip_pim->Draw();
-gPad->Update();
-TLine *line3 = new TLine(2.*0.13957,0.,2.*0.13957,gPad->GetUymax());
-line3->SetLineWidth(3);
-line3->Draw();
-TLine *line4 = new TLine(W_bin[i]-0.938272,0.,W_bin[i]-0.938272,gPad->GetUymax());
-line4->SetLineWidth(3);
-line4->Draw();
-
-
-
-c->cd(3);
-m_pim_p->Draw();
-gPad->Update();
-TLine *line4 = new TLine(0.938272+0.13957,0.,0.938272+0.13957,gPad->GetUymax());
-line4->SetLineWidth(3);
-line4->Draw();
-TLine *line5 = new TLine(W_bin[i]-0.13957,0.,W_bin[i]-0.13957,gPad->GetUymax());
-line5->SetLineWidth(3);
-line5->Draw();
-
-
-
-
-};
-};
-
-file_out->Close();
-
-}; //end of main program
 
 
 TH1D *h_corr_w(TH1D *h, Int_t aa_max, Int_t aa_min) {
@@ -138,6 +65,7 @@ qqq << h->GetName() << "bin_corr" << endl;
 h_out->SetName(qqq.str().c_str());
 qqq.str("");
 
+TF1 *f;
 
 f = new TF1("func",f_fit,h->GetBinLowEdge(aa_min),h->GetBinLowEdge(aa_max)+h->GetBinWidth(aa_min),0);
 
@@ -335,11 +263,6 @@ return h_out;
 }; 
 
 
-Double_t f_fit(Double_t *x, Double_t *par) {
-
-return spline->Eval(x[0]);
-
-}
 
 
 TH1D *h_bin_corr(TH1D *h) {
@@ -348,7 +271,7 @@ TH1D *h_out;
 
 
 TGraph *gr = new TGraph(h);
-spline = new TSpline3("spline",gr);
+spline = new TSpline5("spline",gr);
 spline->SetLineWidth(2);
 
 Float_t left;
@@ -685,3 +608,87 @@ file_out->cd();
 */
 
 };
+
+
+
+ 
+void border_point() {
+#include <TH2.h>
+#include <TH1.h>
+#include <TH3.h>
+#include <THnSparse.h>
+gStyle->SetTitleSize(0.07,"t");
+gStyle->SetTitleY(1.01);
+gStyle->SetOptStat(0);
+gStyle->SetErrorX(0);
+gErrorIgnoreLevel = kError;
+gStyle->SetStatY(0.88); 
+
+
+
+c->Divide(3,1);
+
+
+
+
+//Define input files
+
+TFile *file_cr_sec_pim = new TFile("out_cr_sec_all_top_final_bin_corr.root","READ");
+
+
+ for (Int_t qq2=10; qq2<11;qq2++) {
+ Q2_bin = 0.425 + 0.05*qq2;
+
+
+for (Int_t i=10; i<11;i++) {
+// for (Int_t i=get_min_w(Q2_bin); i<get_max_w(Q2_bin);i++) {
+ W_bin[i] = 1.3125+0.025*i; 
+
+read_data_rec(file_cr_sec_pim,i);
+c->Divide(3,1);
+
+
+
+c->cd(1);
+m_pip_p->Draw();
+gPad->Update();
+TLine *line1 = new TLine(0.938272+0.13957,0.,0.938272+0.13957,gPad->GetUymax());
+line1->SetLineWidth(3);
+line1->Draw();
+TLine *line2 = new TLine(W_bin[i]-0.13957,0.,W_bin[i]-0.13957,gPad->GetUymax());
+line2->SetLineWidth(3);
+line2->Draw();
+
+
+c->cd(2);
+m_pip_pim->Draw();
+gPad->Update();
+TLine *line3 = new TLine(2.*0.13957,0.,2.*0.13957,gPad->GetUymax());
+line3->SetLineWidth(3);
+line3->Draw();
+TLine *line4 = new TLine(W_bin[i]-0.938272,0.,W_bin[i]-0.938272,gPad->GetUymax());
+line4->SetLineWidth(3);
+line4->Draw();
+
+
+
+c->cd(3);
+m_pim_p->Draw();
+gPad->Update();
+TLine *line41 = new TLine(0.938272+0.13957,0.,0.938272+0.13957,gPad->GetUymax());
+line41->SetLineWidth(3);
+line41->Draw();
+TLine *line5 = new TLine(W_bin[i]-0.13957,0.,W_bin[i]-0.13957,gPad->GetUymax());
+line5->SetLineWidth(3);
+line5->Draw();
+
+
+
+
+};
+};
+
+file_out->Close();
+
+}; //end of main program
+

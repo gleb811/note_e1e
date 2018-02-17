@@ -1,4 +1,10 @@
+#include "poissonf.C"
+
 void ph_el(){
+
+//gROOT->LoadMacro("poissonf.C");
+
+Bool_t left_right = 0;
 
 gStyle->SetOptStat("e");
 gStyle ->SetOptFit(0);
@@ -29,25 +35,25 @@ Double_t fract[3][6][18];
 [22.,27.,25.,28.,29.,23.,22.,28.,35.,29.,51.,29.,39.,44.,36.]
 [28.,28.,22.,22.,28.,70.,70.,41.,27.,34.,34.,29.,37.,38.,36.]];*/
 
-Double_t ledg1[15]= {26.,24.,25.,28.,35.,30.,30.,34.,26.,30.,32.,27.,36.,31.,28.};
-Double_t ledg2[15]= {25.,16.,17.,22.,23.,21.,22.,24.,21.,31.,31.,31.,32.,29.,29.};
-Double_t ledg3[15]= {20.,23.,24.,23.,19.,23.,31.,28.,27.,28.,32.,34.,35.,37.,37.};
-Double_t ledg4[15]= {24.,20.,24.,19.,28.,26.,24.,27.,25.,29.,22.,23.,34.,37.,27.};
-Double_t ledg5[15]= {31.,27.,25.,28.,29.,23.,22.,28.,35.,29.,51.,29.,39.,44.,36.};
-Double_t ledg6[15]= {28.,28.,22.,22.,30.,30.,28.,46.,27.,39.,38.,29.,41.,42.,36.};
+Double_t ledg1[15]= {23.,24.,25.,23.,25.,27.,25.,34.,26.,30.,28.,27.,34.,31.,28.};
+Double_t ledg2[15]= {30.,25.,25.,22.,30.,21.,22.,24.,23.,25.,31.,27.,27.,29.,29.};
+Double_t ledg3[15]= {23.,25.,24.,23.,23.,23.,31.,28.,27.,28.,31.,32.,32.,32.,30.};
+Double_t ledg4[15]= {30.,20.,24.,1.,25.,26.,24.,27.,25.,27.,22.,20.,32.,39.,30.};
+Double_t ledg5[15]= {31.,30.,25.,28.,27.,23.,22.,26.,31.,26.,47.,25.,35.,42.,36.};
+Double_t ledg6[15]= {28.,28.,22.,28.,27.,26.,26.,28.,26.,29.,28.,27.,31.,36.,34.};
 
 
-Double_t redg1[15]= {18.,20.,24.,22.,22.,27.,26.,28.,32.,26.,23.,30.,28.,29.,25.};
-Double_t redg2[15]= {31.,20.,22.,33.,27.,26.,35.,35.,23.,24.,30.,45.,40.,40.,46.};
-Double_t redg3[15]= {23.,26.,28.,23.,23.,28.,24.,29.,25.,27.,29.,35.,37.,29.,36.};
-Double_t redg4[15]= {20.,21.,22.,24.,25.,34.,26.,27.,24.,27.,20.,28.,32.,27.,34.};
-Double_t redg5[15]= {27.,26.,27.,51.,40.,35.,31.,33.,33.,46.,40.,37.,48.,44.,31.};
-Double_t redg6[15]= {31.,21.,28.,33.,31.,28.,32.,38.,38.,36.,29.,35.,90.,35.,36.};
+Double_t redg1[15]= {22.,20.,24.,25.,22.,24.,26.,26.,32.,26.,23.,30.,28.,25.,25.};
+Double_t redg2[15]= {28.,20.,22.,30.,25.,23.,30.,33.,23.,24.,27.,35.,30.,33.,36.};
+Double_t redg3[15]= {23.,26.,28.,23.,23.,25.,24.,27.,25.,27.,26.,30.,33.,29.,36.};
+Double_t redg4[15]= {1.,1.,1.,1.,20.,20.,22.,26.,1.,27.,20.,23.,27.,25.,25.};
+Double_t redg5[15]= {27.,26.,25.,51.,38.,32.,29.,30.,31.,36.,35.,27.,38.,41.,31.};
+Double_t redg6[15]= {29.,21.,26.,33.,29.,26.,29.,32.,36.,33.,26.,32.,50.,35.,36.};
 
 TFile *MyFile = new TFile("data_no_nphe.root","READ");
 
 ostringstream qqq;
-for (i=0; i<1; i++) {
+for (i=3; i<4; i++) {
 
 qqq.str("");
 qqq << "c_arr" << i+1;
@@ -61,7 +67,11 @@ c_arr[i]->cd(j-1)->SetLeftMargin(0.2);
 c_arr[i]->cd(j-1)->SetRightMargin(0.005);
 qqq.str("");
 //qqq << "sector1_p_fid/ph_vs_th_p_1_w";
+if (left_right) {
 qqq << "ph_el_sector_" << i+1 << "/left/sector_" << i+1 << "_left_"  << j+1;
+} else {
+qqq << "ph_el_sector_" << i+1 << "/right/sector_" << i+1 << "_right_"  << j+1;
+};
 //cout << qqq.str().c_str() << "\n";
 MyFile->GetObject(qqq.str().c_str(),hist); 
 qqq.str("");
@@ -81,14 +91,25 @@ hist->GetYaxis()->SetTitleSize(0.1);
 hist->GetYaxis()->SetTitleOffset(0.8);
 hist->GetXaxis()->SetTitleOffset(0.9);
 
-//cout << ledg[3][j-2] << "\n";
-if (i == 0) TF1 *func1 = new TF1("fit1",poissonf,ledg1[j-2],400,3);
-if (i == 1) TF1 *func1 = new TF1("fit1",poissonf,ledg2[j-2],400,3);
-if (i == 2) TF1 *func1 = new TF1("fit1",poissonf,ledg3[j-2],400,3);
-if (i == 3) TF1 *func1 = new TF1("fit1",poissonf,ledg4[j-2],400,3);
-if (i == 4) TF1 *func1 = new TF1("fit1",poissonf,ledg5[j-2],400,3);
-if (i == 5) TF1 *func1 = new TF1("fit1",poissonf,ledg6[j-2],400,3);
+TF1 *func1;
 
+//cout << ledg[3][j-2] << "\n";
+
+if (left_right) {
+if (i == 0) func1 = new TF1("fit1",poissonf,ledg1[j-2],400,3);
+if (i == 1) func1 = new TF1("fit1",poissonf,ledg2[j-2],400,3);
+if (i == 2) func1 = new TF1("fit1",poissonf,ledg3[j-2],400,3);
+if (i == 3) func1 = new TF1("fit1",poissonf,ledg4[j-2],400,3);
+if (i == 4) func1 = new TF1("fit1",poissonf,ledg5[j-2],400,3);
+if (i == 5) func1 = new TF1("fit1",poissonf,ledg6[j-2],400,3);
+} else {
+if (i == 0) func1 = new TF1("fit1",poissonf,redg1[j-2],400,3);
+if (i == 1) func1 = new TF1("fit1",poissonf,redg2[j-2],400,3);
+if (i == 2) func1 = new TF1("fit1",poissonf,redg3[j-2],400,3);
+if (i == 3) func1 = new TF1("fit1",poissonf,redg4[j-2],400,3);
+if (i == 4) func1 = new TF1("fit1",poissonf,redg5[j-2],400,3);
+if (i == 5) func1 = new TF1("fit1",poissonf,redg6[j-2],400,3);
+};
 
 
 //func1->SetParameters(100000.,1.,20);
@@ -109,7 +130,14 @@ p0 = func1->GetParameter(0);
 p1 = func1->GetParameter(1);
 p2 = func1->GetParameter(2);
 
-TF1 *f1 = new TF1("f1",poissonf,0,ledg1[j-2],3);
+TF1 *f1;
+
+if (left_right) {
+f1 = new TF1("f1",poissonf,0,ledg4[j-2],3);
+} else {
+f1 = new TF1("f1",poissonf,0,redg4[j-2],3);
+};
+
 f1->SetParameter(0,p0);
 f1->SetParameter(1,p1);
 f1->SetParameter(2,p2);
@@ -118,24 +146,42 @@ f1->SetParameter(2,p2);
 f1->SetFillColor(kBlue);
 f1->SetFillStyle(1001);  
    f1->Draw("lf same");
-   
+
+if (left_right) {   
 if (i == 0)    fract[0][i][j] = f1->Integral(0,500.)/f1->Integral(ledg1[j-2],500.);
 if (i == 1)    fract[0][i][j] = f1->Integral(0,500.)/f1->Integral(ledg2[j-2],500.);
 if (i == 2)    fract[0][i][j] = f1->Integral(0,500.)/f1->Integral(ledg3[j-2],500.);
 if (i == 3)    fract[0][i][j] =f1->Integral(0,500.)/f1-> Integral(ledg4[j-2],500.);
 if (i == 4)    fract[0][i][j] = f1->Integral(0,500.)/f1->Integral(ledg5[j-2],500.);
 if (i == 5)    fract[0][i][j] = f1->Integral(0,500.)/f1->Integral(ledg6[j-2],500.);
+} else { 
+if (i == 0)    fract[2][i][j] = f1->Integral(0,500.)/f1->Integral(redg1[j-2],500.);
+if (i == 1)    fract[2][i][j] = f1->Integral(0,500.)/f1->Integral(redg2[j-2],500.);
+if (i == 2)    fract[2][i][j] = f1->Integral(0,500.)/f1->Integral(redg3[j-2],500.);
+if (i == 3)    fract[2][i][j] =f1->Integral(0,500.)/f1-> Integral(redg4[j-2],500.);
+if (i == 4)    fract[2][i][j] = f1->Integral(0,500.)/f1->Integral(redg5[j-2],500.);
+if (i == 5)    fract[2][i][j] = f1->Integral(0,500.)/f1->Integral(redg6[j-2],500.);
+};
 
 //cout << fract[i][j-2] << "\n";
 
 //cout << p1 << "   " <<p2 <<"   " <<p3<< "\n";
 
-if (i == 0) TLine *line1 = new TLine(ledg1[j-2],0.,ledg1[j-2],hist->GetMaximum()); 
- if (i == 1) TLine *line1 = new TLine(ledg2[j-2],0.,ledg2[j-2],hist->GetMaximum());        
-if (i == 2) TLine *line1 = new TLine(ledg3[j-2],0.,ledg3[j-2],hist->GetMaximum()); 	
-if (i == 3) TLine *line1 = new TLine(ledg4[j-2],0.,ledg4[j-2],hist->GetMaximum()); 	
-if (i == 4) TLine *line1 = new TLine(ledg5[j-2],0.,ledg5[j-2],hist->GetMaximum()); 	
-if (i == 5) TLine *line1 = new TLine(ledg6[j-2],0.,ledg6[j-2],hist->GetMaximum()); 	
+TLine *line1;
+if (left_right) { 
+if (i == 0) line1 = new TLine(ledg1[j-2],0.,ledg1[j-2],hist->GetMaximum()); 
+ if (i == 1) line1 = new TLine(ledg2[j-2],0.,ledg2[j-2],hist->GetMaximum());        
+if (i == 2) line1 = new TLine(ledg3[j-2],0.,ledg3[j-2],hist->GetMaximum()); 	
+if (i == 3) line1 = new TLine(ledg4[j-2],0.,ledg4[j-2],hist->GetMaximum()); 	
+if (i == 4) line1 = new TLine(ledg5[j-2],0.,ledg5[j-2],hist->GetMaximum()); 	
+if (i == 5) line1 = new TLine(ledg6[j-2],0.,ledg6[j-2],hist->GetMaximum()); 	} else { 
+if (i == 0) line1 = new TLine(redg1[j-2],0.,redg1[j-2],hist->GetMaximum()); 
+ if (i == 1) line1 = new TLine(redg2[j-2],0.,redg2[j-2],hist->GetMaximum());        
+if (i == 2) line1 = new TLine(redg3[j-2],0.,redg3[j-2],hist->GetMaximum()); 	
+if (i == 3) line1 = new TLine(redg4[j-2],0.,redg4[j-2],hist->GetMaximum()); 	
+if (i == 4) line1 = new TLine(redg5[j-2],0.,redg5[j-2],hist->GetMaximum()); 	
+if (i == 5) line1 = new TLine(redg6[j-2],0.,redg6[j-2],hist->GetMaximum()); 
+};
 	line1->SetLineColor(2);
         line1->SetLineWidth(3);
     line1->Draw("same");
@@ -156,7 +202,7 @@ c1_arr[i]->cd(j-1)->SetBottomMargin(0.15);
 c1_arr[i]->cd(j-1)->SetTopMargin(0.15);
 c1_arr[i]->cd(j-1)->SetLeftMargin(0.2);
 qqq.str("");
-qqq << "ph_el_sector_" << i+1 << "/right/sector_" << i+1 << "_right_"  << j+1;
+qqq << "ph_el_sector_" << i+1 << "/left/sector_" << i+1 << "_left_"  << j+1;
 MyFile->GetObject(qqq.str().c_str(),hist1); 
 
 hist1->Draw();
@@ -170,13 +216,23 @@ hist1->GetXaxis()->SetLabelSize(0.1);
 hist1->GetXaxis()->SetTitle("Number of ph_el");
 hist1->GetXaxis()->SetTitleSize(0.1);
 
-if (i == 0) TF1 *func2 = new TF1("fit2",poissonf,redg1[j-2],500,3);
-if (i == 1) TF1 *func2 = new TF1("fit2",poissonf,redg2[j-2],500,3);
-if (i == 2) TF1 *func2 = new TF1("fit2",poissonf,redg3[j-2],500,3);
-if (i == 3) TF1 *func2 = new TF1("fit2",poissonf,redg4[j-2],500,3);
-if (i == 4) TF1 *func2 = new TF1("fit2",poissonf,redg5[j-2],500,3);
-if (i == 5) TF1 *func2 = new TF1("fit2",poissonf,redg6[j-2],500,3);
+TF1 *func2;
 
+if (left_right) {
+if (i == 0) func2 = new TF1("fit2",poissonf,ledg1[j-2],500,3);
+if (i == 1) func2 = new TF1("fit2",poissonf,ledg2[j-2],500,3);
+if (i == 2) func2 = new TF1("fit2",poissonf,ledg3[j-2],500,3);
+if (i == 3) func2 = new TF1("fit2",poissonf,ledg4[j-2],500,3);
+if (i == 4) func2 = new TF1("fit2",poissonf,ledg5[j-2],500,3);
+if (i == 5) func2 = new TF1("fit2",poissonf,ledg6[j-2],500,3);
+} else {
+if (i == 0) func2 = new TF1("fit2",poissonf,redg1[j-2],500,3);
+if (i == 1) func2 = new TF1("fit2",poissonf,redg2[j-2],500,3);
+if (i == 2) func2 = new TF1("fit2",poissonf,redg3[j-2],500,3);
+if (i == 3) func2 = new TF1("fit2",poissonf,redg4[j-2],500,3);
+if (i == 4) func2 = new TF1("fit2",poissonf,redg5[j-2],500,3);
+if (i == 5) func2 = new TF1("fit2",poissonf,redg6[j-2],500,3);
+};
 
 func2->SetParameter(0,100000.);
 func2->SetParameter(1,1.);
@@ -197,13 +253,23 @@ f2->SetParameter(2,p5);
   f2->SetLineColor(kBlack);
   f2->SetLineWidth(2);
    f2->Draw("same");
-   
+
+if (left_right) {   
+if (i == 0)    fract[0][i][j] = f2->Integral(0,500.)/f2->Integral(ledg1[j-2],500.);
+if (i == 1)    fract[0][i][j] = f2->Integral(0,500.)/f2->Integral(ledg2[j-2],500.);
+if (i == 2)    fract[0][i][j] = f2->Integral(0,500.)/f2->Integral(ledg3[j-2],500.);
+if (i == 3)    fract[0][i][j] = f2->Integral(0,500.)/f2-> Integral(ledg4[j-2],500.);
+if (i == 4)    fract[0][i][j] = f2->Integral(0,500.)/f2->Integral(ledg5[j-2],500.);
+if (i == 5)    fract[0][i][j] = f2->Integral(0,500.)/f2->Integral(ledg6[j-2],500);
+} else {
 if (i == 0)    fract[2][i][j] = f2->Integral(0,500.)/f2->Integral(redg1[j-2],500.);
 if (i == 1)    fract[2][i][j] = f2->Integral(0,500.)/f2->Integral(redg2[j-2],500.);
 if (i == 2)    fract[2][i][j] = f2->Integral(0,500.)/f2->Integral(redg3[j-2],500.);
 if (i == 3)    fract[2][i][j] = f2->Integral(0,500.)/f2-> Integral(redg4[j-2],500.);
 if (i == 4)    fract[2][i][j] = f2->Integral(0,500.)/f2->Integral(redg5[j-2],500.);
 if (i == 5)    fract[2][i][j] = f2->Integral(0,500.)/f2->Integral(redg6[j-2],500);
+};
+
 
 if (i == 0)    fract[1][i][j] = 1.;
 if (i == 1)    fract[1][i][j] = 1.;
@@ -217,12 +283,14 @@ if (i == 5)    fract[1][i][j] = 1.;
 
 //cout << p1 << "   " <<p2 <<"   " <<p3<< "\n";
 
-if (i == 0) TLine *line2 = new TLine(redg1[j-2],0.,redg1[j-2],hist1->GetMaximum()); 
-if (i == 1) TLine *line2 = new TLine(redg2[j-2],0.,redg2[j-2],hist1->GetMaximum());        
-if (i == 2) TLine *line2 = new TLine(redg3[j-2],0.,redg3[j-2],hist1->GetMaximum()); 	
-if (i == 3) TLine *line2 = new TLine(redg4[j-2],0.,redg4[j-2],hist1->GetMaximum()); 	
-if (i == 4) TLine *line2 = new TLine(redg5[j-2],0.,redg5[j-2],hist1->GetMaximum()); 	
-if (i == 5) TLine *line2 = new TLine(redg6[j-2],0.,redg6[j-2],hist1->GetMaximum()); 	
+TLine *line2;
+
+if (i == 0) line2 = new TLine(redg1[j-2],0.,redg1[j-2],hist1->GetMaximum()); 
+if (i == 1) line2 = new TLine(redg2[j-2],0.,redg2[j-2],hist1->GetMaximum());        
+if (i == 2) line2 = new TLine(redg3[j-2],0.,redg3[j-2],hist1->GetMaximum()); 	
+if (i == 3) line2 = new TLine(redg4[j-2],0.,redg4[j-2],hist1->GetMaximum()); 	
+if (i == 4) line2 = new TLine(redg5[j-2],0.,redg5[j-2],hist1->GetMaximum()); 	
+if (i == 5) line2 = new TLine(redg6[j-2],0.,redg6[j-2],hist1->GetMaximum()); 	
 	line2->SetLineColor(2);
        line2->SetLineWidth(3);
   line2->Draw("same");
@@ -250,10 +318,12 @@ cout << k << "," << i << "," <<j << "," << fract[k][i][j]<< "\n";
   ofs.close();
 };
 
+/*
+
 double poissonf( double*x, double*par){
 
 return s = par[0]*TMath::Poisson(x[0]/par[2],par[1]);
 } ;
-
+*/
 
 
